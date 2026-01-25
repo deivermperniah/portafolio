@@ -1,0 +1,35 @@
+---
+interface Props {
+  command: string;
+}
+
+const { command } = Astro.props;
+---
+
+<div class="output-block-wrapper">
+  <div class="command-input-container">
+    <span class="prompt">
+      <span class="prompt-user">deivermperniah</span>@<span class="prompt-host"
+        >portfolio</span
+      >:~$
+    </span>
+    <span class="executed-command">{command}</span>
+  </div>
+  <div class="command-output">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .output-block-wrapper {
+    margin-bottom: 1.5rem;
+  }
+  .executed-command {
+    color: var(--text-white);
+  }
+  .command-output {
+    margin-top: 0.5rem;
+    color: var(--text-gray);
+    white-space: pre-wrap;
+  }
+</style>

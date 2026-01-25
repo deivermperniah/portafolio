@@ -1,0 +1,349 @@
+---
+import CommandInput from "./CommandInput.astro";
+---
+
+<div class="terminal-container">
+  <div class="terminal-header">
+    <div class="window-controls">
+      <div class="control-dot dot-close"></div>
+      <div class="control-dot dot-min"></div>
+      <div class="control-dot dot-max"></div>
+    </div>
+    <div class="window-title">deivermperniah@portfolio:~</div>
+    <div style="width: 52px;"></div>
+    <!-- Spacer to center title -->
+  </div>
+
+  <div class="terminal-window" id="terminal-window">
+    <div id="terminal-output"></div>
+    <div id="current-input-row">
+      <CommandInput />
+    </div>
+  </div>
+</div>
+
+<script>
+  const terminalOutput = document.getElementById("terminal-output")!;
+  const terminalWindow = document.getElementById("terminal-window")!;
+  const terminalInput = document.getElementById(
+    "terminal-input",
+  ) as HTMLInputElement;
+  const bootMessage = document.getElementById("boot-message")!;
+
+  const COMMANDS = {
+    HELP: "help",
+    ABOUT: "about",
+    SOBREMI: "sobre-mi",
+    SKILLS: "skills",
+    HABILIDADES: "habilidades",
+    EXPERIENCE: "experience",
+    EXPERIENCIA: "experiencia",
+    PROJECTS: "projects",
+    PROYECTOS: "proyectos",
+    OPEN: "open",
+    CONTACT: "contact",
+    CONTACTO: "contacto",
+    CLEAR: "clear",
+    LS: "ls",
+    NAME: "name",
+    PROFESSION: "profession",
+    LOCATION: "location",
+  };
+
+  const DATA = {
+    about: `¡Hola! Soy Deiver Pernia un Informático con 1 año de experiencia. Mis conocimientos abarcan: Frontend, Backend, Bases de Datos, Sistemas Operativos y Soporte Técnico.
+
+Actualmente, me encuentro ampliando mis habilidades mientras curso Ingeniería en Informática. En mi tiempo libre, desarrollo proyectos personales e ideas innovadoras para seguir creciendo profesionalmente.`,
+    skills: `Frontend: HTML | CSS | JavaScript | Vue
+Backend: Laravel | Supabase
+Bases de Datos: MySQL | PostgreSQL
+Sistemas Operativos: Linux | Windows
+Soporte Técnico: Software | Hardware | Redes`,
+    experience: `Técnico de Soporte Informático – Instituto Universitario Adventista de Venezuela
+<i style="color: var(--text-gray); opacity: 0.8;">Agosto 2023 – Diciembre 2023</i>
+<span class="hanging-list">- Brindé soporte técnico a usuarios, resolviendo incidencias de software y hardware, realizando diagnóstico y reparación de equipos, así como la instalación y configuración de sistemas operativos y aplicaciones.</span><span class="hanging-list">- Ejecuté mantenimiento preventivo y correctivo de redes, incluyendo la configuración y reparación de routers, switches y cableado estructurado, solucionando problemas de conectividad y reduciendo el tiempo de inactividad de la infraestructura.</span>
+Desarrollador Frontend (Pasantías) – Redmasiva
+<i style="color: var(--text-gray); opacity: 0.8;">Febrero 2024 – Junio 2024</i>
+<span class="hanging-list">- Participé en el desarrollo frontend de proyectos como Biblia.chat, Redmasiva AI y B1omed, utilizando HTML, CSS, JavaScript y Vue.js, implementando funcionalidades interactivas y optimizando el rendimiento y la experiencia de usuario.</span>
+Técnico de Soporte Informático & Frontend – Alimentos Venepan
+<i style="color: var(--text-gray); opacity: 0.8;">Julio 2024 – Octubre de 2024</i>
+<span class="hanging-list">- Resolví incidencias de software y hardware para usuarios finales, realizando instalación, configuración y actualización de sistemas operativos y aplicaciones, así como la reparación de equipos y documentación de soluciones.</span><span class="hanging-list">- Administré y mantuve la infraestructura de redes LAN/WAN, configurando routers, switches y firewalls, resolviendo problemas de conectividad, aplicando medidas de seguridad y monitoreando el rendimiento de la red.</span><span class="hanging-list">- Gestioné bases de datos MySQL y sistemas administrativos (ERP), asegurando la integridad, disponibilidad y respaldo de la información mediante copias de seguridad y optimización del rendimiento.</span><span class="hanging-list">- Desarrollé y mantuve la intranet corporativa, implementando funcionalidades para mejorar la comunicación interna y el acceso a la información, utilizando HTML, CSS, JavaScript y Vue.js.</span>`,
+    projects: [
+      {
+        name: "Biblia.chat",
+        repo: "github.com/deivermpernia/biblia-chat",
+        link: "biblia.chat",
+      },
+      {
+        name: "EcoTrack",
+        repo: "github.com/deivermpernia/ecotrack",
+        link: "ecotrack.dev",
+      },
+      {
+        name: "DevFlow",
+        repo: "github.com/deivermpernia/devflow",
+        link: "devflow.io",
+      },
+    ],
+    contact: `Email: deiver.pernia@example.com
+LinkedIn: linkedin.com/in/deiverpernia
+GitHub: github.com/deiverpernia`,
+  };
+
+  const commandHistory: string[] = [];
+  let historyIndex = -1;
+
+  async function typeText(text: string, element: HTMLElement, speed = 20) {
+    return new Promise((resolve) => {
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          terminalWindow.scrollTop = terminalWindow.scrollHeight;
+        } else {
+          clearInterval(interval);
+          resolve(true);
+        }
+      }, speed);
+    });
+  }
+
+  function createOutputBlock(command: string, content: string | HTMLElement) {
+    const block = document.createElement("div");
+    block.className = "output-block";
+
+    const promptLine = document.createElement("div");
+    promptLine.className = "command-input-container";
+    promptLine.innerHTML = `
+      <span class="prompt">
+        <span class="prompt-user">deivermperniah</span>@<span class="prompt-host"
+          >portfolio</span
+        >:~$
+      </span>
+      <span style="color: var(--text-white);">${command}</span>
+    `;
+
+    const outputLine = document.createElement("div");
+    outputLine.className = "command-output";
+
+    if (typeof content === "string") {
+      outputLine.innerHTML = content;
+    } else {
+      outputLine.appendChild(content);
+    }
+
+    block.appendChild(promptLine);
+    block.appendChild(outputLine);
+    terminalOutput.appendChild(block);
+    terminalWindow.scrollTop = terminalWindow.scrollHeight;
+  }
+
+  async function handleCommand(commandLine: string) {
+    const fullCommand = commandLine.trim();
+    if (!fullCommand) return;
+
+    const [command, ...args] = fullCommand.toLowerCase().split(" ");
+
+    switch (command) {
+      case COMMANDS.HELP:
+        const helpText = `Comandos disponibles:
+  help        - Muestra esta lista de comandos
+  ls          - Lista las secciones principales del portafolio
+  clear       - Limpia la pantalla y reinicia la presentación
+  sobre-mi    - Una breve descripción sobre quién soy
+  habilidades - Listado de mis conocimientos técnicos
+  experiencia - Mi trayectoria profesional detallada
+  proyectos   - Algunos de los proyectos en los que he trabajado
+  contacto    - Mis redes sociales y correo electrónico
+  name        - Muestra mi nombre completo
+  profession  - Muestra mi rol principal
+  location    - Mi ubicación actual`;
+        createOutputBlock(fullCommand, helpText);
+        break;
+
+      case COMMANDS.ABOUT:
+      case COMMANDS.SOBREMI:
+        createOutputBlock(fullCommand, DATA.about);
+        break;
+
+      case COMMANDS.SKILLS:
+      case COMMANDS.HABILIDADES:
+        createOutputBlock(fullCommand, DATA.skills);
+        break;
+
+      case COMMANDS.EXPERIENCE:
+      case COMMANDS.EXPERIENCIA:
+        createOutputBlock(fullCommand, DATA.experience);
+        break;
+
+      case COMMANDS.PROJECTS:
+      case COMMANDS.PROYECTOS:
+        const projectsContainer = document.createElement("div");
+        DATA.projects.forEach((p) => {
+          const item = document.createElement("div");
+          item.innerHTML = `
+            - <span class="highlight">${p.name}</span> | 
+            <a href="https://${p.repo}" target="_blank" style="color: var(--text-white); text-decoration: underline;">repo</a> | 
+            <a href="https://${p.link}" target="_blank" style="color: var(--text-white); text-decoration: underline;">url</a>
+          `;
+          projectsContainer.appendChild(item);
+        });
+        createOutputBlock(fullCommand, projectsContainer);
+        break;
+
+      case COMMANDS.OPEN:
+        const searchName = args.join(" ").toLowerCase();
+        const project = DATA.projects.find(
+          (p) => p.name.toLowerCase() === searchName,
+        );
+        if (project) {
+          createOutputBlock(
+            fullCommand,
+            `Abriendo proyecto: ${project.name}...`,
+          );
+          setTimeout(() => {
+            window.open(`https://${project.link}`, "_blank");
+          }, 500);
+        } else {
+          createOutputBlock(
+            fullCommand,
+            `Error: Proyecto '${searchName}' no encontrado. Usa 'proyectos' para ver la lista.`,
+          );
+        }
+        break;
+
+      case COMMANDS.CONTACT:
+      case COMMANDS.CONTACTO:
+        createOutputBlock(fullCommand, DATA.contact);
+        break;
+
+      case COMMANDS.CLEAR:
+        terminalOutput.innerHTML = "";
+        startSequence();
+        break;
+
+      case COMMANDS.LS:
+        const lsOutput = document.createElement("div");
+        lsOutput.style.display = "grid";
+        lsOutput.style.gridTemplateColumns =
+          "repeat(auto-fill, minmax(130px, 1fr))";
+        lsOutput.style.gap = "10px";
+        lsOutput.style.color = "#3584e4"; // Fedora/GNOME directory blue
+        lsOutput.style.fontWeight = "bold";
+        lsOutput.innerHTML = `
+          <span class="ls-item" style="cursor: pointer;">sobre-mi</span>
+          <span class="ls-item" style="cursor: pointer;">habilidades</span>
+          <span class="ls-item" style="cursor: pointer;">experiencia</span>
+          <span class="ls-item" style="cursor: pointer;">proyectos</span>
+          <span class="ls-item" style="cursor: pointer;">contacto</span>
+        `;
+        createOutputBlock(fullCommand, lsOutput);
+        break;
+
+      case COMMANDS.NAME:
+        createOutputBlock(fullCommand, "Deiver Pernia");
+        break;
+
+      case COMMANDS.PROFESSION:
+        createOutputBlock(fullCommand, "Full Stack Developer & IT");
+        break;
+
+      case COMMANDS.LOCATION:
+        createOutputBlock(fullCommand, "Lima, Perú");
+        break;
+
+      default:
+        createOutputBlock(
+          fullCommand,
+          `bash: ${command}: instrucción no encontrada...`,
+        );
+    }
+  }
+
+  terminalInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const command = terminalInput.value;
+      if (command.trim()) {
+        commandHistory.push(command);
+        historyIndex = commandHistory.length;
+      }
+      handleCommand(command);
+      terminalInput.value = "";
+    } else if (e.key === "ArrowUp") {
+      if (historyIndex > 0) {
+        historyIndex--;
+        terminalInput.value = commandHistory[historyIndex];
+      }
+      e.preventDefault();
+    } else if (e.key === "ArrowDown") {
+      if (historyIndex < commandHistory.length - 1) {
+        historyIndex++;
+        terminalInput.value = commandHistory[historyIndex];
+      } else {
+        historyIndex = commandHistory.length;
+        terminalInput.value = "";
+      }
+      e.preventDefault();
+    }
+  });
+
+  // Focus input on click anywhere
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+
+    // Check if clicking a navigation item or an ls item
+    if (target.classList.contains("nav-item")) {
+      const cmd = target.getAttribute("data-cmd");
+      if (cmd) {
+        terminalInput.value = cmd;
+        handleCommand(cmd);
+        terminalInput.value = "";
+      }
+    } else if (target.classList.contains("ls-item")) {
+      const cmd = target.innerText.trim();
+      if (cmd) {
+        terminalInput.value = cmd;
+        handleCommand(cmd);
+        terminalInput.value = "";
+      }
+    }
+
+    terminalInput.focus();
+  });
+
+  function startSequence() {
+    createOutputBlock(
+      'echo "Welcome to Deiver Pernia Portfolio."',
+      "Welcome to Deiver Pernia Portfolio.",
+    );
+    createOutputBlock(
+      'echo "Escribe \\"help\\" para ver todos los comandos disponibles."',
+      'Escribe "help" para ver todos los comandos disponibles.',
+    );
+    // Auto-run name, profession, and ls sequentially
+    setTimeout(() => {
+      handleCommand("name");
+      setTimeout(() => {
+        handleCommand("profession");
+        setTimeout(() => {
+          handleCommand("location");
+          setTimeout(() => {
+            handleCommand("ls");
+          }, 300);
+        }, 300);
+      }, 300);
+    }, 400);
+  }
+
+  // Direct start sequence
+  window.addEventListener("load", () => {
+    startSequence();
+  });
+</script>
+
+<style is:global>
+  .text-white {
+    color: var(--text-white);
+  }
+</style>
