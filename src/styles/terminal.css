@@ -186,3 +186,14 @@ body {
   text-decoration: underline;
   color: var(--text-white);
 }
+
+.project-link {
+  color: #f6d32d;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.project-link:hover {
+  text-decoration: underline;
+  color: var(--text-white);
+}

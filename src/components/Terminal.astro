@@ -16,7 +16,7 @@ import CommandInput from "./CommandInput.astro";
 
   <div class="terminal-window" id="terminal-window">
     <div id="terminal-output"></div>
-    <div id="current-input-row">
+    <div id="current-input-row" style="display: none;">
       <CommandInput />
     </div>
   </div>
@@ -33,21 +33,18 @@ import CommandInput from "./CommandInput.astro";
   const COMMANDS = {
     HELP: "help",
     ABOUT: "about",
-    SOBREMI: "sobre-mi",
     SKILLS: "skills",
-    HABILIDADES: "habilidades",
     EXPERIENCE: "experience",
-    EXPERIENCIA: "experiencia",
     PROJECTS: "projects",
-    PROYECTOS: "proyectos",
-    OPEN: "open",
     CONTACT: "contact",
-    CONTACTO: "contacto",
+    TOOLS: "tools",
+    LANGUAGES: "languages",
     CLEAR: "clear",
     LS: "ls",
     NAME: "name",
     PROFESSION: "profession",
     LOCATION: "location",
+    EDUCATION: "education",
   };
 
   const DATA = {
@@ -85,9 +82,18 @@ Técnico de Soporte Informático & Frontend – Alimentos Venepan
         link: "devflow.io",
       },
     ],
-    contact: `Email: deiver.pernia@example.com
-LinkedIn: linkedin.com/in/deiverpernia
-GitHub: github.com/deiverpernia`,
+    contact: `Email: <a href="mailto:deivermperniah@gmail.com" class="project-link">deivermperniah@gmail.com</a>
+Teléfono: +51 943 458 410`,
+    tools: `Figma | Git | GitHub`,
+    languages: `🇪🇸 Español - Nativo
+🇺🇸 Inglés - A2`,
+    education: `Técnico Superior Universitario en Informática
+<i style="color: var(--text-gray); opacity: 0.8;">Enero de 2021 - Junio de 2024</i>
+Instituto Universitario Adventista de Venezuela
+
+Ingeniería en Informática
+<i style="color: var(--text-gray); opacity: 0.8;">Octubre de 2024 - Presente</i>
+Universidad Politécnica Territorial de Yaracuy “Arístides Bastidas”`,
   };
 
   const commandHistory: string[] = [];
@@ -147,75 +153,61 @@ GitHub: github.com/deiverpernia`,
 
     switch (command) {
       case COMMANDS.HELP:
-        const helpText = `Comandos disponibles:
-  help        - Muestra esta lista de comandos
-  ls          - Lista las secciones principales del portafolio
-  clear       - Limpia la pantalla y reinicia la presentación
-  sobre-mi    - Una breve descripción sobre quién soy
-  habilidades - Listado de mis conocimientos técnicos
-  experiencia - Mi trayectoria profesional detallada
-  proyectos   - Algunos de los proyectos en los que he trabajado
-  contacto    - Mis redes sociales y correo electrónico
-  name        - Muestra mi nombre completo
-  profession  - Muestra mi rol principal
-  location    - Mi ubicación actual`;
+        const helpText = `Available commands:
+  help        - Show this list of commands
+  clear       - Clean the screen and restart presentation
+  ls          - List the main sections of the portfolio
+  about       - A brief description about who I am
+  contact     - My email
+  languages   - Languages I speak
+  skills      - List of my technical knowledge
+  tools       - Tools I use daily
+  experience  - My detailed professional background
+  projects    - Some of the projects I've worked on
+  education   - My academic background
+  name        - Show my full name
+  profession  - Show my primary role
+  location    - My current location`;
         createOutputBlock(fullCommand, helpText);
         break;
 
       case COMMANDS.ABOUT:
-      case COMMANDS.SOBREMI:
         createOutputBlock(fullCommand, DATA.about);
         break;
 
       case COMMANDS.SKILLS:
-      case COMMANDS.HABILIDADES:
         createOutputBlock(fullCommand, DATA.skills);
         break;
 
       case COMMANDS.EXPERIENCE:
-      case COMMANDS.EXPERIENCIA:
         createOutputBlock(fullCommand, DATA.experience);
         break;
 
       case COMMANDS.PROJECTS:
-      case COMMANDS.PROYECTOS:
         const projectsContainer = document.createElement("div");
         DATA.projects.forEach((p) => {
           const item = document.createElement("div");
-          item.innerHTML = `
-            - <span class="highlight">${p.name}</span> | 
-            <a href="https://${p.repo}" target="_blank" style="color: var(--text-white); text-decoration: underline;">repo</a> | 
-            <a href="https://${p.link}" target="_blank" style="color: var(--text-white); text-decoration: underline;">url</a>
-          `;
+          item.style.marginBottom = "4px";
+          item.innerHTML = `- <span style="display:inline-block; min-width: 100px; color: var(--text-gray);">${p.name}</span> | <a href="https://${p.repo}" target="_blank" class="project-link">repositorio</a> | <a href="https://${p.link}" target="_blank" class="project-link">link</a>`;
           projectsContainer.appendChild(item);
         });
         createOutputBlock(fullCommand, projectsContainer);
         break;
 
-      case COMMANDS.OPEN:
-        const searchName = args.join(" ").toLowerCase();
-        const project = DATA.projects.find(
-          (p) => p.name.toLowerCase() === searchName,
-        );
-        if (project) {
-          createOutputBlock(
-            fullCommand,
-            `Abriendo proyecto: ${project.name}...`,
-          );
-          setTimeout(() => {
-            window.open(`https://${project.link}`, "_blank");
-          }, 500);
-        } else {
-          createOutputBlock(
-            fullCommand,
-            `Error: Proyecto '${searchName}' no encontrado. Usa 'proyectos' para ver la lista.`,
-          );
-        }
+      case COMMANDS.CONTACT:
+        createOutputBlock(fullCommand, DATA.contact);
         break;
 
-      case COMMANDS.CONTACT:
-      case COMMANDS.CONTACTO:
-        createOutputBlock(fullCommand, DATA.contact);
+      case COMMANDS.TOOLS:
+        createOutputBlock(fullCommand, DATA.tools);
+        break;
+
+      case COMMANDS.LANGUAGES:
+        createOutputBlock(fullCommand, DATA.languages);
+        break;
+
+      case COMMANDS.EDUCATION:
+        createOutputBlock(fullCommand, DATA.education);
         break;
 
       case COMMANDS.CLEAR:
@@ -232,11 +224,14 @@ GitHub: github.com/deiverpernia`,
         lsOutput.style.color = "#3584e4"; // Fedora/GNOME directory blue
         lsOutput.style.fontWeight = "bold";
         lsOutput.innerHTML = `
-          <span class="ls-item" style="cursor: pointer;">sobre-mi</span>
-          <span class="ls-item" style="cursor: pointer;">habilidades</span>
-          <span class="ls-item" style="cursor: pointer;">experiencia</span>
-          <span class="ls-item" style="cursor: pointer;">proyectos</span>
-          <span class="ls-item" style="cursor: pointer;">contacto</span>
+          <span class="ls-item" style="cursor: pointer;">about</span>
+          <span class="ls-item" style="cursor: pointer;">contact</span>
+          <span class="ls-item" style="cursor: pointer;">languages</span>
+          <span class="ls-item" style="cursor: pointer;">skills</span>
+          <span class="ls-item" style="cursor: pointer;">tools</span>
+          <span class="ls-item" style="cursor: pointer;">experience</span>
+          <span class="ls-item" style="cursor: pointer;">projects</span>
+          <span class="ls-item" style="cursor: pointer;">education</span>
         `;
         createOutputBlock(fullCommand, lsOutput);
         break;
@@ -312,28 +307,40 @@ GitHub: github.com/deiverpernia`,
     terminalInput.focus();
   });
 
-  function startSequence() {
+  const inputRow = document.getElementById("current-input-row")!;
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
+  async function startSequence() {
+    inputRow.style.display = "none";
+
     createOutputBlock(
       'echo "Welcome to Deiver Pernia Portfolio."',
       "Welcome to Deiver Pernia Portfolio.",
     );
+    await sleep(400);
+
     createOutputBlock(
-      'echo "Escribe \\"help\\" para ver todos los comandos disponibles."',
-      'Escribe "help" para ver todos los comandos disponibles.',
+      'echo "Type \\"help\\" to see all available commands."',
+      'Type "help" to see all available commands.',
     );
-    // Auto-run name, profession, and ls sequentially
-    setTimeout(() => {
-      handleCommand("name");
-      setTimeout(() => {
-        handleCommand("profession");
-        setTimeout(() => {
-          handleCommand("location");
-          setTimeout(() => {
-            handleCommand("ls");
-          }, 300);
-        }, 300);
-      }, 300);
-    }, 400);
+    await sleep(400);
+
+    handleCommand("name");
+    await sleep(300);
+
+    handleCommand("profession");
+    await sleep(300);
+
+    handleCommand("location");
+    await sleep(300);
+
+    handleCommand("ls");
+    await sleep(400);
+
+    inputRow.style.display = "block";
+    terminalInput.focus();
+    terminalWindow.scrollTop = terminalWindow.scrollHeight;
   }
 
   // Direct start sequence
