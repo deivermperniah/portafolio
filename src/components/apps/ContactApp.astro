@@ -1,0 +1,83 @@
+---
+import Icon from "../os/Icon.astro";
+import { contact } from "../../data/profile";
+---
+
+<div class="mail">
+  <section class="mail-quick" aria-label="Contacto directo">
+    <div class="mail-row">
+      <Icon name="mail" size={18} />
+      <a href={`mailto:${contact.email}`}>{contact.email}</a>
+      <button class="btn btn-sm" data-copy={contact.email} aria-label="Copiar email">
+        <Icon name="copy" size={14} /> <span>Copiar</span>
+      </button>
+    </div>
+    <div class="mail-row">
+      <Icon name="phone" size={18} />
+      <span>{contact.phone}</span>
+      <a class="btn btn-sm" href={contact.whatsapp} target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+    {
+      contact.linkedin && (
+        <div class="mail-row">
+          <Icon name="link" size={18} />
+          <a href={contact.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      )
+    }
+    {
+      contact.github && (
+        <div class="mail-row">
+          <Icon name="code" size={18} />
+          <a href={contact.github} target="_blank" rel="noopener">GitHub</a>
+        </div>
+      )
+    }
+  </section>
+
+  <form class="mail-form" id="mail-form">
+    <div class="mail-field">
+      <span>Para</span>
+      <strong>{contact.email}</strong>
+    </div>
+    <label class="mail-field">
+      <span>De</span>
+      <input name="name" type="text" placeholder="Tu nombre y empresa" required />
+    </label>
+    <label class="mail-field">
+      <span>Asunto</span>
+      <input name="subject" type="text" value="Oportunidad laboral" required />
+    </label>
+    <textarea name="message" rows="6" placeholder="Hola Deiver, vi tu portafolio y…" required aria-label="Mensaje"></textarea>
+    <div class="mail-send">
+      <button class="btn btn-primary" type="submit"><Icon name="send" size={16} /> Enviar</button>
+      <span class="muted">Se abrirá tu cliente de correo.</span>
+    </div>
+  </form>
+</div>
+
+<script>
+  import { contact } from "../../data/profile";
+
+  const form = document.getElementById("mail-form") as HTMLFormElement;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const subject = String(data.get("subject"));
+    const body = `${data.get("message")}\n\n— ${data.get("name")}`;
+    window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const label = btn.querySelector("span");
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy!);
+        if (label) label.textContent = "¡Copiado!";
+      } catch {
+        if (label) label.textContent = "No se pudo copiar";
+      }
+      setTimeout(() => label && (label.textContent = "Copiar"), 2000);
+    });
+  });
+</script>

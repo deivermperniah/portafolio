@@ -1,0 +1,29 @@
+---
+import { education, languages } from "../../data/profile";
+---
+
+<div class="edu">
+  <h3 class="section-label">Formación</h3>
+  <ul class="edu-list">
+    {
+      education.map((e) => (
+        <li class="card">
+          <p class="edu-period">{e.period}</p>
+          <h4>{e.title}</h4>
+          <p class="muted">{e.institution}</p>
+        </li>
+      ))
+    }
+  </ul>
+  <h3 class="section-label">Idiomas</h3>
+  <ul class="edu-langs">
+    {
+      languages.map((l) => (
+        <li class="card">
+          <strong>{l.name}</strong>
+          <span class="chip">{l.level}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>

@@ -1,0 +1,52 @@
+---
+import AppIcon from "./AppIcon.astro";
+import Icon from "./Icon.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  icon: string;
+  color: string;
+  width?: number;
+  height?: number;
+  variant?: "default" | "dark" | "flush";
+}
+
+const { id, title, icon, color, width = 720, height = 520, variant = "default" } = Astro.props;
+---
+
+<section
+  class={`window window-${variant}`}
+  id={`win-${id}`}
+  data-app={id}
+  data-title={title}
+  role="dialog"
+  aria-label={title}
+  tabindex="-1"
+  hidden
+  style={`--w: ${width}px; --h: ${height}px;`}
+>
+  <header class="window-titlebar">
+    <button class="win-btn win-back" data-action="close" aria-label="Volver al inicio">
+      <Icon name="back" size={18} />
+    </button>
+    <div class="window-title">
+      <AppIcon icon={icon} color={color} size="sm" />
+      <span>{title}</span>
+    </div>
+    <div class="window-controls">
+      <button class="win-btn" data-action="minimize" aria-label="Minimizar">
+        <Icon name="minimize" size={14} />
+      </button>
+      <button class="win-btn" data-action="maximize" aria-label="Maximizar">
+        <Icon name="maximize" size={12} />
+      </button>
+      <button class="win-btn win-close" data-action="close" aria-label="Cerrar">
+        <Icon name="close" size={14} />
+      </button>
+    </div>
+  </header>
+  <div class="window-body">
+    <slot />
+  </div>
+</section>

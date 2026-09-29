@@ -1,0 +1,102 @@
+---
+import Icon from "../os/Icon.astro";
+import { projects } from "../../data/profile";
+import { hasPublicFile } from "../../data/assets";
+---
+
+<div class="files" id="files">
+  <aside class="files-sidebar" aria-label="Lugares">
+    <button class="files-place is-active" data-files-home><Icon name="folder" size={16} /> Proyectos</button>
+    <button class="files-place" data-open="cv"><Icon name="file" size={16} /> Documentos</button>
+    <button class="files-place" data-open="terminal"><Icon name="terminal" size={16} /> Terminal</button>
+  </aside>
+  <div class="files-main">
+    <nav class="files-pathbar" aria-label="Ruta">
+      <button class="crumb" data-files-home>~/Proyectos</button>
+      <span class="crumb-current" id="files-crumb"></span>
+    </nav>
+
+    <div class="files-grid" id="files-grid">
+      {
+        projects.map((p) => (
+          <button class="folder" data-project={p.slug}>
+            <span class="folder-icon" aria-hidden="true">
+              <Icon name="folder" size={56} />
+            </span>
+            <span class="folder-name">{p.name}</span>
+            <span class="folder-summary">{p.summary}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      projects.map((p) => (
+        <article class="project-detail" data-project-detail={p.slug} hidden>
+          {p.image && hasPublicFile(p.image) ? (
+            <img class="project-shot" src={p.image} alt={`Captura de ${p.name}`} loading="lazy" />
+          ) : (
+            <div class="project-shot project-shot-placeholder" aria-hidden="true">
+              <Icon name="image" size={28} />
+              <span>{p.name}</span>
+            </div>
+          )}
+          <div class="project-info">
+            <h3>{p.name}</h3>
+            <p class="project-role">{p.role}</p>
+            <p>{p.description}</p>
+            <ul class="chips">
+              {p.stack.map((s) => (
+                <li class="chip">{s}</li>
+              ))}
+            </ul>
+            <div class="project-actions">
+              {p.demo && (
+                <a class="btn btn-primary btn-sm" href={p.demo} target="_blank" rel="noopener">
+                  <Icon name="external" size={14} /> Ver demo
+                </a>
+              )}
+              {p.repo && (
+                <a class="btn btn-sm" href={p.repo} target="_blank" rel="noopener">
+                  <Icon name="code" size={14} /> Código
+                </a>
+              )}
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const root = document.getElementById("files")!;
+  const grid = document.getElementById("files-grid")!;
+  const crumb = document.getElementById("files-crumb")!;
+
+  function showHome() {
+    grid.hidden = false;
+    crumb.textContent = "";
+    root.querySelectorAll<HTMLElement>("[data-project-detail]").forEach((d) => (d.hidden = true));
+  }
+
+  function showProject(slug: string) {
+    const detail = root.querySelector<HTMLElement>(`[data-project-detail="${slug}"]`);
+    if (!detail) return;
+    grid.hidden = true;
+    detail.hidden = false;
+    crumb.textContent = `/ ${detail.querySelector("h3")?.textContent ?? ""}`;
+    detail.closest(".window-body")?.scrollTo(0, 0);
+  }
+
+  root.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    const folder = target.closest<HTMLElement>("[data-project]");
+    if (folder) showProject(folder.dataset.project!);
+    else if (target.closest("[data-files-home]")) showHome();
+  });
+
+  document.addEventListener("os:project", (e) => {
+    showProject((e as CustomEvent<string>).detail);
+  });
+</script>

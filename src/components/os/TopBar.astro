@@ -1,0 +1,24 @@
+---
+import Icon from "./Icon.astro";
+import { profile } from "../../data/profile";
+---
+
+<header class="topbar">
+  <button class="topbar-btn" id="activities-btn" aria-controls="overview" aria-expanded="false">
+    <span class="activities-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    Actividades
+  </button>
+  <time class="topbar-clock" id="clock"></time>
+  <div class="topbar-status">
+    {
+      profile.available && (
+        <span class="topbar-available" title="Disponible para trabajar">
+          <span class="pulse" aria-hidden="true" />
+          <span class="topbar-available-text">Disponible para trabajar</span>
+        </span>
+      )
+    }
+    <Icon name="wifi" size={16} />
+    <Icon name="battery" size={18} />
+  </div>
+</header>

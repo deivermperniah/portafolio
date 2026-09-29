@@ -1,19 +1,49 @@
 ---
-import TerminalLayout from "../layouts/TerminalLayout.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BootScreen from "../components/os/BootScreen.astro";
+import TopBar from "../components/os/TopBar.astro";
+import Desktop from "../components/os/Desktop.astro";
+import Dock from "../components/os/Dock.astro";
+import Window from "../components/os/Window.astro";
+import Notification from "../components/os/Notification.astro";
+import Overview from "../components/os/Overview.astro";
+import ContextMenu from "../components/os/ContextMenu.astro";
+import AboutApp from "../components/apps/AboutApp.astro";
+import CvApp from "../components/apps/CvApp.astro";
+import ExperienceApp from "../components/apps/ExperienceApp.astro";
+import ProjectsApp from "../components/apps/ProjectsApp.astro";
+import StackApp from "../components/apps/StackApp.astro";
+import EducationApp from "../components/apps/EducationApp.astro";
+import ContactApp from "../components/apps/ContactApp.astro";
 import Terminal from "../components/Terminal.astro";
+import { apps, profile } from "../data/profile";
+
+const app = Object.fromEntries(apps.map((a) => [a.id, a]));
 ---
 
-<TerminalLayout title="Deiver Pernia">
-  <main>
-    <Terminal />
-  </main>
-</TerminalLayout>
+<BaseLayout
+  title={`${profile.name} — Desarrollador Full Stack`}
+  description={`${profile.headline} Portafolio de ${profile.name}: experiencia, proyectos y contacto.`}
+>
+  <BootScreen />
+  <TopBar />
+  <Desktop>
+    <Window {...app.about} width={640} height={700}><AboutApp /></Window>
+    <Window {...app.cv} width={760} height={640} variant="flush"><CvApp /></Window>
+    <Window {...app.experience} width={700} height={600}><ExperienceApp /></Window>
+    <Window {...app.projects} width={820} height={560} variant="flush"><ProjectsApp /></Window>
+    <Window {...app.stack} width={720} height={560}><StackApp /></Window>
+    <Window {...app.education} width={600} height={500}><EducationApp /></Window>
+    <Window {...app.contact} width={620} height={600}><ContactApp /></Window>
+    <Window {...app.terminal} width={760} height={500} variant="dark"><Terminal /></Window>
+  </Desktop>
+  <Dock />
+  <Overview />
+  <ContextMenu />
+  <Notification />
+</BaseLayout>
 
-<style>
-  main {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-</style>
+<script>
+  import { initDesktop } from "../scripts/window-manager";
+  initDesktop();
+</script>

@@ -1,0 +1,35 @@
+---
+import AppIcon from "./AppIcon.astro";
+import Icon from "./Icon.astro";
+import { apps } from "../../data/profile";
+---
+
+<div id="overview" class="overview" hidden>
+  <label class="overview-search">
+    <Icon name="search" size={18} />
+    <input
+      type="search"
+      id="overview-search"
+      placeholder="Buscar aplicaciones…"
+      autocomplete="off"
+      aria-label="Buscar aplicaciones"
+    />
+  </label>
+  <section class="overview-section" id="overview-windows-section">
+    <h2>Ventanas abiertas</h2>
+    <div class="overview-windows" id="overview-windows"></div>
+  </section>
+  <section class="overview-section">
+    <h2>Aplicaciones</h2>
+    <div class="overview-apps">
+      {
+        apps.map((app) => (
+          <button class="launcher" data-open={app.id} data-app-name={`${app.title} ${app.file}`.toLowerCase()}>
+            <AppIcon icon={app.icon} color={app.color} size="lg" />
+            <span>{app.title}</span>
+          </button>
+        ))
+      }
+    </div>
+  </section>
+</div>

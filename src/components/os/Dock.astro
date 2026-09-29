@@ -1,0 +1,19 @@
+---
+import AppIcon from "./AppIcon.astro";
+import { apps } from "../../data/profile";
+---
+
+<nav class="dock" aria-label="Dock de aplicaciones">
+  <ul>
+    {
+      apps.map((app) => (
+        <li>
+          <button class="dock-item" data-open={app.id} data-dock aria-label={app.title} title={app.title}>
+            <AppIcon icon={app.icon} color={app.color} />
+            <span class="dock-indicator" aria-hidden="true" />
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

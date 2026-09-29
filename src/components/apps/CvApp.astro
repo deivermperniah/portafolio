@@ -1,0 +1,115 @@
+---
+import Icon from "../os/Icon.astro";
+import { profile, contact, experience, projects, stack, tools, education, languages } from "../../data/profile";
+import { hasPublicFile } from "../../data/assets";
+
+const hasCv = hasPublicFile(profile.cv);
+---
+
+<div class="cv">
+  <div class="cv-toolbar">
+    <span class="cv-toolbar-title">CV.pdf — 1 página</span>
+    <div class="cv-toolbar-actions">
+      {
+        hasCv && (
+          <a class="btn btn-sm btn-primary" href={profile.cv} download>
+            <Icon name="download" size={14} /> Descargar PDF
+          </a>
+        )
+      }
+      <button class="btn btn-sm" data-print-cv><Icon name="printer" size={14} /> Imprimir</button>
+    </div>
+  </div>
+  <div class="cv-scroll">
+    <article class="cv-paper">
+      <header class="cv-header">
+        <h2>{profile.name}</h2>
+        <p class="cv-role">{profile.role}</p>
+        <p class="cv-contact">
+          <span>{profile.location}</span>
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>
+          <span>{contact.phone}</span>
+          {contact.linkedin && <a href={contact.linkedin}>LinkedIn</a>}
+          {contact.github && <a href={contact.github}>GitHub</a>}
+        </p>
+      </header>
+
+      <section>
+        <h3>Perfil</h3>
+        <p>{profile.pitch}</p>
+      </section>
+
+      <section>
+        <h3>Experiencia</h3>
+        {
+          experience.map((job) => (
+            <div class="cv-item">
+              <div class="cv-item-head">
+                <strong>{job.role}</strong>
+                <span>{job.period}</span>
+              </div>
+              <p class="cv-item-sub">{job.company}</p>
+              <ul>
+                {job.highlights.map((h) => (
+                  <li>{h}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </section>
+
+      <section>
+        <h3>Proyectos</h3>
+        <ul>
+          {
+            projects.map((p) => (
+              <li>
+                <strong>{p.name}</strong> — {p.summary} <em>({p.stack.join(", ")})</em>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="cv-columns">
+        <div>
+          <h3>Habilidades</h3>
+          <ul class="cv-plain">
+            {
+              stack.map((g) => (
+                <li>
+                  <strong>{g.name}:</strong> {g.items.join(", ")}
+                </li>
+              ))
+            }
+            <li><strong>Herramientas:</strong> {tools.join(", ")}</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Educación</h3>
+          {
+            education.map((e) => (
+              <div class="cv-item">
+                <strong>{e.title}</strong>
+                <p class="cv-item-sub">
+                  {e.institution} · {e.period}
+                </p>
+              </div>
+            ))
+          }
+          <h3>Idiomas</h3>
+          <p>{languages.map((l) => `${l.name} (${l.level})`).join(" · ")}</p>
+        </div>
+      </section>
+    </article>
+  </div>
+</div>
+
+<script>
+  document.querySelector("[data-print-cv]")?.addEventListener("click", () => {
+    document.body.classList.add("printing-cv");
+    window.print();
+    document.body.classList.remove("printing-cv");
+  });
+</script>

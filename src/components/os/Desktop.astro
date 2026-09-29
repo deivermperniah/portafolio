@@ -1,0 +1,45 @@
+---
+import AppIcon from "./AppIcon.astro";
+import { apps, profile } from "../../data/profile";
+---
+
+<main class="desktop" id="desktop">
+  <div class="wallpaper" aria-hidden="true">
+    <span class="wallpaper-mark">Deiver OS</span>
+  </div>
+  <h1 class="sr-only">Deiver Pernia — Desarrollador Full Stack</h1>
+  <ul class="desktop-icons" aria-label="Aplicaciones">
+    {
+      apps.map((app) => (
+        <li>
+          <button class="desktop-icon" data-open={app.id}>
+            <AppIcon icon={app.icon} color={app.color} size="lg" />
+            <span class="desktop-icon-label">
+              <span class="label-file">{app.file}</span>
+              <span class="label-title">{app.title}</span>
+            </span>
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+  <section class="home-widget" aria-label="Resumen">
+    {
+      profile.available && (
+        <p class="status-badge">
+          <span class="pulse" aria-hidden="true" />
+          Disponible para trabajar
+        </p>
+      )
+    }
+    <div>
+      <p class="home-widget-name">{profile.name}</p>
+      <p class="home-widget-role">{profile.role} · {profile.location}</p>
+    </div>
+    <div class="home-widget-actions">
+      <button class="btn btn-primary" data-open="cv">Ver CV</button>
+      <button class="btn" data-open="contact">Contactar</button>
+    </div>
+  </section>
+  <slot />
+</main>

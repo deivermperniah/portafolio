@@ -1,0 +1,93 @@
+---
+import Icon from "../os/Icon.astro";
+import { profile, contact, experience, projects } from "../../data/profile";
+import { hasPublicFile } from "../../data/assets";
+
+const hasPhoto = hasPublicFile(profile.photo);
+const hasCv = hasPublicFile(profile.cv);
+---
+
+<div class="about">
+  <div class="about-hero">
+    {
+      hasPhoto ? (
+        <img src={profile.photo} alt={`Foto de ${profile.name}`} width="112" height="112" class="avatar" />
+      ) : (
+        <div class="avatar avatar-fallback" aria-hidden="true">
+          DP
+        </div>
+      )
+    }
+    <div class="about-id">
+      {
+        profile.available && (
+          <p class="status-badge">
+            <span class="pulse" aria-hidden="true" />
+            Disponible para trabajar
+          </p>
+        )
+      }
+      <h2 class="about-name">{profile.name}</h2>
+      <p class="about-role">{profile.role}</p>
+      <p class="about-meta"><Icon name="pin" size={14} /> {profile.location}</p>
+    </div>
+  </div>
+
+  <p class="about-headline">{profile.headline}</p>
+  <p class="about-pitch">{profile.pitch}</p>
+
+  <div class="about-actions">
+    {
+      hasCv ? (
+        <a class="btn btn-primary" href={profile.cv} download>
+          <Icon name="download" size={16} /> Descargar CV
+        </a>
+      ) : (
+        <button class="btn btn-primary" data-open="cv">
+          <Icon name="file" size={16} /> Ver CV
+        </button>
+      )
+    }
+    <button class="btn" data-open="contact"><Icon name="mail" size={16} /> Contactar</button>
+    {
+      contact.linkedin && (
+        <a class="btn" href={contact.linkedin} target="_blank" rel="noopener">
+          <Icon name="link" size={16} /> LinkedIn
+        </a>
+      )
+    }
+    {
+      contact.github && (
+        <a class="btn" href={contact.github} target="_blank" rel="noopener">
+          <Icon name="code" size={16} /> GitHub
+        </a>
+      )
+    }
+  </div>
+
+  <dl class="about-facts">
+    <div>
+      <dt>Empresas</dt>
+      <dd>{experience.length}</dd>
+    </div>
+    <div>
+      <dt>Proyectos</dt>
+      <dd>{projects.length}</dd>
+    </div>
+    <div>
+      <dt>Perfil</dt>
+      <dd class="dd-text">Dev + Infra</dd>
+    </div>
+  </dl>
+
+  <div class="about-text">
+    {profile.about.map((p) => <p>{p}</p>)}
+  </div>
+
+  <p class="about-hint">
+    Explora el escritorio:{" "}
+    <button class="link" data-open="experience">experiencia</button>,{" "}
+    <button class="link" data-open="projects">proyectos</button>{" o "}
+    <button class="link" data-open="terminal">la terminal</button>{" si eres dev."}
+  </p>
+</div>

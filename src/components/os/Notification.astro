@@ -1,0 +1,20 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<div id="notification" class="notification" role="status" hidden>
+  <img src="/logo.png" alt="" width="36" height="36" class="notification-logo" />
+  <div class="notification-content">
+    <p class="notification-title">👋 Bienvenido a Deiver OS</p>
+    <p class="notification-text">
+      Haz clic en los iconos para explorar. ¿Prefieres lo clásico? Abre mi CV.
+    </p>
+    <div class="notification-actions">
+      <button class="btn btn-sm btn-primary" data-open="cv" data-dismiss-notification>Ver CV</button>
+      <button class="btn btn-sm" data-dismiss-notification>Explorar</button>
+    </div>
+  </div>
+  <button class="win-btn notification-close" data-dismiss-notification aria-label="Cerrar notificación">
+    <Icon name="close" size={14} />
+  </button>
+</div>

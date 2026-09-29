@@ -1,0 +1,16 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  icon: string;
+  color: string;
+  size?: "sm" | "md" | "lg";
+}
+
+const { icon, color, size = "md" } = Astro.props;
+const glyph = { sm: 14, md: 26, lg: 32 }[size];
+---
+
+<span class={`app-icon app-icon-${size}`} style={`--app-color: ${color}`} aria-hidden="true">
+  <Icon name={icon} size={glyph} />
+</span>

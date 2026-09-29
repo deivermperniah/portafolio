@@ -1,0 +1,43 @@
+---
+import { experience } from "../../data/profile";
+
+// Hash de commit decorativo y estable a partir del nombre de la empresa.
+const hash = (s: string) => {
+  let h = 2166136261;
+  for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  return (h >>> 0).toString(16).padStart(8, "0").slice(0, 7);
+};
+---
+
+<div class="gitlog">
+  <p class="gitlog-cmd"><span class="prompt-sign">$</span> git log --author="Deiver Pernia"</p>
+  <ol class="commits">
+    {
+      experience.map((job, i) => (
+        <li class="commit">
+          <span class="commit-dot" aria-hidden="true" />
+          <div class="commit-body">
+            <p class="commit-meta">
+              <code class="commit-hash">{hash(job.company)}</code>
+              {i === 0 && <span class="commit-ref">HEAD → main</span>}
+              {i === experience.length - 1 && <span class="commit-ref commit-ref-init">primer commit</span>}
+              <span class="commit-date">{job.period}</span>
+            </p>
+            <h3 class="commit-title">{job.role}</h3>
+            <p class="commit-company">{job.company}</p>
+            <ul class="commit-list">
+              {job.highlights.map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+            <ul class="chips">
+              {job.stack.map((s) => (
+                <li class="chip">{s}</li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</div>

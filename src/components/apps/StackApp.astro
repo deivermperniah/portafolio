@@ -1,0 +1,35 @@
+---
+import { stack, tools } from "../../data/profile";
+---
+
+<div class="monitor">
+  <p class="monitor-sub">Recursos del sistema · deivermperniah@portfolio</p>
+  <div class="monitor-grid">
+    {
+      stack.map((group, i) => (
+        <section class="monitor-card" style={`--core: ${i}`}>
+          <header>
+            <h3>{group.name}</h3>
+            <span class="monitor-core">CPU {i}</span>
+          </header>
+          <div class="monitor-graph" aria-hidden="true">
+            {Array.from({ length: 16 }, (_, j) => (
+              <span style={`--i: ${j}`} />
+            ))}
+          </div>
+          <ul class="chips">
+            {group.items.map((s) => (
+              <li class="chip">{s}</li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+  <section class="monitor-card monitor-tools">
+    <header><h3>Herramientas</h3></header>
+    <ul class="chips">
+      {tools.map((t) => <li class="chip">{t}</li>)}
+    </ul>
+  </section>
+</div>
