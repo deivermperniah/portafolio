@@ -1,6 +1,6 @@
-# Deiver OS — Portafolio de Deiver Pernia
+# portafolio
 
-Portafolio con forma de escritorio Linux (estilo Fedora/GNOME) en el navegador, hecho con [Astro](https://astro.build) sin frameworks de UI.
+Portafolio personal con forma de escritorio Linux (estilo Fedora/GNOME) en el navegador: ventanas arrastrables, dock, terminal y vista móvil.
 
 ## Stack
 
@@ -25,9 +25,19 @@ src/
 └── styles/                 # os.css y terminal.css
 ```
 
-## Editar contenido
+## Puesta en marcha
 
-Todo el contenido está en `src/data/profile.ts` y lo usan las ventanas y la terminal. Los recursos opcionales de `public/` (`cv-deiver-pernia.pdf`, `foto.webp`, `projects/<slug>.webp`, `og.png`) se muestran solo si existen.
+1. Instala dependencias:
+
+   ```sh
+   npm install
+   ```
+
+2. Inicia el servidor de desarrollo en `http://localhost:4321`:
+
+   ```sh
+   npm run dev
+   ```
 
 ## Comandos
 
