@@ -2,37 +2,32 @@
 
 Portafolio con forma de escritorio Linux (estilo Fedora/GNOME) en el navegador, hecho con [Astro](https://astro.build) sin frameworks de UI.
 
-- **Escritorio**: iconos y dock que abren ventanas (Sobre mí, CV, Experiencia, Proyectos, Stack, Educación, Contacto y Terminal). Se pueden arrastrar, minimizar, maximizar y cerrar; `Esc` cierra la ventana activa.
-- **Actividades**: vista general con buscador de apps.
-- **Móvil**: pantalla de inicio tipo teléfono con apps a pantalla completa.
-- **Terminal**: `help`, `neofetch`, `open <app>`, `sudo hire-me`…
-- **Deep links**: `/#projects`, `/#cv`, `/#contact`, etc. abren esa ventana directamente.
+## Stack
 
-## Editar contenido
-
-Todo el contenido está en [`src/data/profile.ts`](src/data/profile.ts) (perfil, experiencia, proyectos, stack, educación, contacto). Lo usan tanto las ventanas como la terminal.
-
-Recursos opcionales en `public/` (se muestran automáticamente si existen):
-
-| Archivo | Uso |
-| --- | --- |
-| `cv-deiver-pernia.pdf` | Botón "Descargar CV" |
-| `foto.webp` | Foto en "Sobre mí" |
-| `projects/<slug>.webp` | Captura del proyecto (ruta en `image` de cada proyecto) |
-| `og.png` (1200×630) | Vista previa al compartir el link (requiere `site` en `astro.config.mjs`) |
+- Astro 7 con salida estática.
+- Componentes `.astro` y TypeScript del lado del cliente.
+- CSS propio (sin framework de estilos).
 
 ## Estructura
 
 ```text
 src/
+├── pages/index.astro       # Única ruta; monta el escritorio
+├── layouts/BaseLayout.astro
 ├── components/
-│   ├── os/        # Escritorio: TopBar, Dock, Window, Overview, BootScreen…
-│   ├── apps/      # Contenido de cada ventana
+│   ├── os/                 # Escritorio: TopBar, Dock, Window, Overview…
+│   ├── apps/               # Contenido de cada ventana
 │   └── Terminal.astro
-├── data/profile.ts
+├── data/
+│   ├── profile.ts          # Todo el contenido editable
+│   └── assets.ts           # Detección de archivos opcionales en public/
 ├── scripts/window-manager.ts
-└── styles/        # os.css (escritorio) y terminal.css
+└── styles/                 # os.css y terminal.css
 ```
+
+## Editar contenido
+
+Todo el contenido está en `src/data/profile.ts` y lo usan las ventanas y la terminal. Los recursos opcionales de `public/` (`cv-deiver-pernia.pdf`, `foto.webp`, `projects/<slug>.webp`, `og.png`) se muestran solo si existen.
 
 ## Comandos
 
