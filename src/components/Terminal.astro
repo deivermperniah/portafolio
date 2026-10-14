@@ -45,7 +45,7 @@ import CommandInput from "./CommandInput.astro";
     experience: experience
       .map(
         (job) =>
-          `<span class="highlight">${job.role}</span> – ${job.company}\n${dim(job.period)}\n` +
+          `<span class="highlight">${job.role}</span> - ${job.company}\n${dim(job.period)}\n` +
           job.highlights.map((h) => `<span class="hanging-list">- ${h}</span>`).join(""),
       )
       .join("\n"),

@@ -73,7 +73,7 @@ export const experience: Experience[] = [
   {
     role: "Técnico de Soporte Informático & Frontend",
     company: "Alimentos Venepan",
-    period: "Jul 2024 – Oct 2024",
+    period: "Jul 2024 - Oct 2024",
     start: "2024-07",
     highlights: [
       "Desarrollé y mantuve la intranet corporativa con Vue.js, mejorando la comunicación interna y el acceso a la información.",
@@ -86,7 +86,7 @@ export const experience: Experience[] = [
   {
     role: "Desarrollador Frontend (Pasantías)",
     company: "Redmasiva",
-    period: "Feb 2024 – Jun 2024",
+    period: "Feb 2024 - Jun 2024",
     start: "2024-02",
     highlights: [
       "Participé en el frontend de Biblia.chat, Redmasiva AI y B1omed, productos con usuarios reales.",
@@ -97,7 +97,7 @@ export const experience: Experience[] = [
   {
     role: "Técnico de Soporte Informático",
     company: "Instituto Universitario Adventista de Venezuela",
-    period: "Ago 2023 – Dic 2023",
+    period: "Ago 2023 - Dic 2023",
     start: "2023-08",
     highlights: [
       "Brindé soporte técnico a usuarios: diagnóstico y reparación de equipos, instalación de sistemas operativos y aplicaciones.",
@@ -152,12 +152,12 @@ export const education: Education[] = [
   {
     title: "Ingeniería en Informática",
     institution: "Universidad Politécnica Territorial de Yaracuy “Arístides Bastidas”",
-    period: "Oct 2024 – Presente",
+    period: "Oct 2024 - Presente",
   },
   {
     title: "Técnico Superior Universitario en Informática",
     institution: "Instituto Universitario Adventista de Venezuela",
-    period: "Ene 2021 – Jun 2024",
+    period: "Ene 2021 - Jun 2024",
   },
 ];
 
