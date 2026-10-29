@@ -1,12 +1,12 @@
 # portafolio
 
-Portafolio personal con forma de escritorio Linux (estilo Fedora/GNOME) en el navegador: ventanas arrastrables, dock, terminal y vista móvil.
+Portafolio personal con forma de escritorio Linux (estilo Fedora/GNOME) en el navegador: ventanas arrastrables, vista general, terminal y vista móvil.
 
 🔗 Demo: https://deivermperniah.vercel.app/
 
 ## Qué se puede hacer
 
-- **Abrir ventanas** arrastrables con minimizar, maximizar y cerrar, más dock y vista general.
+- **Abrir ventanas** arrastrables con minimizar, maximizar y cerrar, más vista general.
 - **Usar la terminal** para navegar el portafolio con comandos.
 - **Entrar por deep link** (`/#projects`, `/#cv`, `/#contact`) y abrir la ventana correspondiente.
 - **Editar todo el contenido** desde un solo archivo (`src/data/profile.ts`).
@@ -24,7 +24,7 @@ src/
 ├── pages/index.astro       # Única ruta; monta el escritorio
 ├── layouts/BaseLayout.astro
 ├── components/
-│   ├── os/                 # Escritorio: TopBar, Dock, Window, Overview…
+│   ├── os/                 # Escritorio: TopBar, Window, Overview…
 │   ├── apps/               # Contenido de cada ventana
 │   └── Terminal.astro
 ├── data/

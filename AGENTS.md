@@ -20,7 +20,7 @@
 
 - `src/pages/index.astro`: única ruta; monta el escritorio.
 - `src/layouts/BaseLayout.astro`: layout base (head, metadatos).
-- `src/components/os/`: escritorio (TopBar, Dock, Window, Overview, BootScreen, AppIcon, ContextMenu, Notification, Icon).
+- `src/components/os/`: escritorio (TopBar, Window, Overview, BootScreen, AppIcon, ContextMenu, Notification, Icon).
 - `src/components/apps/`: contenido de cada ventana (About, Cv, Experience, Projects, Stack, Education, Contact).
 - `src/components/Terminal.astro` y `CommandInput.astro`: terminal interactiva.
 - `src/data/profile.ts`: todo el contenido editable (perfil, experiencia, proyectos, stack, educación, contacto).
