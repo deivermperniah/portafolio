@@ -1,0 +1,51 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+import Icon from "./Icon.astro";
+import { projects, ui, anchors, tr, type Lang } from "../data/profile";
+import { hasPublicFile } from "../data/assets";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<section id={anchors.projects} class="section">
+  <div class="container stack-lg">
+    <SectionHeader index={3} label={t.sections.projects} title={t.projects.title} />
+    <div class="projects">
+      {
+        projects.map((p) => (
+          <article class="card project fx-card">
+            {p.image && hasPublicFile(p.image) ? (
+              <img class="project-shot" src={p.image} alt={`${t.projects.shot} ${p.name}`} loading="lazy" />
+            ) : (
+              <div class="project-shot project-shot-empty" aria-hidden="true">{p.name}</div>
+            )}
+            <div class="project-body">
+              <h3>{p.name}</h3>
+              <p>{tr(p.description, lang)}</p>
+              <div class="chips">
+                {p.stack.map((s) => <span class="chip">{s}</span>)}
+              </div>
+              <div class="project-links">
+                {p.demo && (
+                  <a href={p.demo} target="_blank" rel="noopener">
+                    {t.projects.demo}<Icon name="arrow-up-right" size={14} />
+                  </a>
+                )}
+                {p.repo && (
+                  <a href={p.repo} target="_blank" rel="noopener">
+                    {t.projects.repo}<Icon name="code" size={14} />
+                  </a>
+                )}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

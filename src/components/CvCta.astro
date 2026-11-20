@@ -1,0 +1,33 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+import Icon from "./Icon.astro";
+import { profile, ui, anchors, type Lang } from "../data/profile";
+import { hasPublicFile } from "../data/assets";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const hasCv = hasPublicFile(profile.cv);
+---
+
+{
+  hasCv && (
+    <section id={anchors.cv} class="section">
+      <div class="container">
+        <div class="cv-cta">
+          <div class="cv-cta-text">
+            <SectionHeader index={6} label={t.sections.cv} title={t.cv.title} />
+            <p>{t.cv.text}</p>
+          </div>
+          <a class="btn btn-primary fx-btn" href={profile.cv} download>
+            <Icon name="download" size={18} />
+            {t.cv.button}
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}

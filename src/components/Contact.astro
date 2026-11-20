@@ -1,0 +1,89 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+import Icon from "./Icon.astro";
+import { contact, ui, anchors, type Lang } from "../data/profile";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang].contact;
+
+const socials = [
+  { label: "LinkedIn", href: contact.linkedin },
+  { label: "GitHub", href: contact.github },
+  { label: "WhatsApp", href: contact.whatsapp },
+  { label: "Instagram", href: contact.instagram },
+  { label: "X", href: contact.x },
+].filter((s) => s.href);
+---
+
+<section id={anchors.contact} class="section">
+  <div class="container contact">
+    <div class="contact-main">
+      <SectionHeader index={7} label={ui[lang].sections.contact} />
+      <h2 class="contact-title">{t.title}</h2>
+      <div class="contact-email">
+        <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="copy-email"
+          data-email={contact.email}
+          data-ok={t.copied}
+          data-ok-text={t.copiedText}
+          data-error={t.copyError}
+        >
+          <Icon name="copy" size={16} />
+          {t.copy}
+        </button>
+      </div>
+      <div class="socials">
+        {socials.map((s) => <a class="btn btn-outline" href={s.href} target="_blank" rel="noopener">{s.label}</a>)}
+      </div>
+    </div>
+
+    <form
+      class="card contact-form"
+      id="contact-form"
+      action={`https://formsubmit.co/ajax/${contact.email}`}
+      method="POST"
+      data-sending={t.sending}
+      data-ok={t.sent}
+      data-ok-text={t.sentText}
+      data-error={t.error}
+      data-error-text={t.errorText}
+    >
+      <input type="hidden" name="_subject" value={t.subject} />
+      <input type="hidden" name="_template" value="table" />
+      <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <div class="form-row">
+        <div class="field">
+          <label for="c-name">{t.name}</label>
+          <input id="c-name" class="input" type="text" name="name" placeholder={t.namePh} autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="c-email">{t.email}</label>
+          <input id="c-email" class="input" type="email" name="email" placeholder={t.emailPh} autocomplete="email" required />
+        </div>
+      </div>
+      <div class="field">
+        <label for="c-message">{t.message}</label>
+        <textarea id="c-message" class="input" name="message" rows="5" placeholder={t.messagePh} required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary fx-btn">
+        <Icon name="send" size={16} />
+        <span>{t.send}</span>
+      </button>
+    </form>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    <span class="toast-icon"><Icon name="check" size={18} /></span>
+    <div>
+      <p class="toast-title"></p>
+      <p class="toast-text"></p>
+    </div>
+  </div>
+</section>

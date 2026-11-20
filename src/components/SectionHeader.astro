@@ -1,0 +1,14 @@
+---
+interface Props {
+  index: number;
+  label: string;
+  title?: string;
+}
+
+const { index, label, title } = Astro.props;
+---
+
+<div class="section-header">
+  <p class="eyebrow">{String(index).padStart(2, "0")} · {label}</p>
+  {title && <h2 class="section-title">{title}</h2>}
+</div>

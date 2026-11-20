@@ -1,0 +1,53 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+import { education, certifications, languages, ui, anchors, tr, type Lang } from "../data/profile";
+import { hasPublicFile } from "../data/assets";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<section id={anchors.education} class="section">
+  <div class="container stack-lg">
+    <SectionHeader index={5} label={t.sections.education} title={t.education.title} />
+    <div class="edu-grid">
+      {
+        education.map((e) => (
+          <div class="card edu fx-card">
+            <p class="muted">{tr(e.period, lang)}</p>
+            <h3>{tr(e.title, lang)}</h3>
+            <p>{e.institution}</p>
+          </div>
+        ))
+      }
+    </div>
+    {
+      certifications.length > 0 && (
+        <div class="stack-md">
+          <h3 class="subhead">{t.education.certifications}</h3>
+          <div class="edu-grid">
+            {certifications.map((c) => (
+              <div class="card edu cert fx-card">
+                {hasPublicFile(c.image) && (
+                  <img src={c.image} alt={tr(c.title, lang)} width="160" height="124" loading="lazy" />
+                )}
+                <div>
+                  <p class="muted">{tr(c.period, lang)}</p>
+                  <h3>{tr(c.title, lang)}</h3>
+                  <p>{c.institution}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+    <p class="edu-langs">
+      {t.education.languages}: {languages.map((l) => `${tr(l.name, lang)} ${tr(l.level, lang)}`).join(" · ")}
+    </p>
+  </div>
+</section>

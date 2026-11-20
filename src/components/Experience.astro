@@ -1,0 +1,39 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+import { experience, ui, anchors, tr, type Lang } from "../data/profile";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<section id={anchors.experience} class="section">
+  <div class="container stack-lg">
+    <SectionHeader index={2} label={t.sections.experience} title={t.experience.title} />
+    <div class="jobs">
+      {
+        experience.map((job) => (
+          <article class="job">
+            <p class="job-period">{tr(job.period, lang)}</p>
+            <div class="job-body">
+              <h3>{tr(job.role, lang)} · {tr(job.company, lang)}</h3>
+              {job.highlights.length > 0 && (
+                <ul class="job-list">
+                  {job.highlights.map((h) => <li>{tr(h, lang)}</li>)}
+                </ul>
+              )}
+              {job.stack.length > 0 && (
+                <div class="chips">
+                  {job.stack.map((s) => <span class="chip">{tr(s, lang)}</span>)}
+                </div>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

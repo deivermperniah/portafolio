@@ -1,0 +1,31 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+import { profile, ui, anchors, tr, type Lang } from "../data/profile";
+import { hasPublicFile } from "../data/assets";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const hasPhoto = hasPublicFile(profile.photo);
+---
+
+<section id={anchors.about} class="section">
+  <div class="container about">
+    <div class="about-side">
+      <SectionHeader index={1} label={t.sections.about} />
+      {
+        hasPhoto ? (
+          <img class="avatar" src={profile.photo} alt={`${t.about.photo} ${profile.name}`} width="160" height="160" />
+        ) : (
+          <div class="avatar avatar-fallback" aria-hidden="true">DP</div>
+        )
+      }
+    </div>
+    <div class="about-text">
+      {profile.about.map((p) => <p>{tr(p, lang)}</p>)}
+    </div>
+  </div>
+</section>

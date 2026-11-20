@@ -1,0 +1,35 @@
+---
+import SectionHeader from "./SectionHeader.astro";
+import { stack, ui, anchors, tr, type Lang } from "../data/profile";
+import { techIcon } from "../data/assets";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<section id={anchors.stack} class="section">
+  <div class="container stack-lg">
+    <SectionHeader index={4} label={t.sections.stack} title={t.stack.title} />
+    <div class="tech-groups">
+      {
+        stack.map((group) => (
+          <div class="tech-group">
+            <h3>{tr(group.name, lang)}</h3>
+            <ul class="chips">
+              {group.items.map((s) => (
+                <li class="chip chip-lg fx-chip">
+                  <img src={techIcon(s)} alt="" width="16" height="16" loading="lazy" />
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

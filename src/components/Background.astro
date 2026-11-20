@@ -1,0 +1,43 @@
+---
+const snippets = [
+  "const deiver = { role: 'dev', city: 'Lima' };",
+  "01001011 10110010 00111010 11010011",
+  "fetch('/api/diezmos').then(r => r.json())",
+  "SELECT * FROM proyectos WHERE estado = 'vivo';",
+  "[OK] build completo · 0 errores",
+  "ssh deiver@lima --neon",
+  "while (true) { aprender(); construir(); }",
+  "git commit -m 'feat: nueva UI'",
+  "npm run dev → astro ready in 312ms",
+  "import { useState } from 'react'",
+  "await supabase.from('bases').select('*')",
+];
+
+// left %, duración s, retraso s, opacidad
+const columns: [number, number, number, number][] = [
+  [2.3, 20, -12, 1], [9.5, 17, -29, 1], [16.7, 23, -2, 1], [25.8, 34, -30, 0.5],
+  [32.9, 17, -17, 0.5], [36.5, 25, -17, 1], [44.5, 33, -22, 0.5], [52, 33, -13, 0.7],
+  [58.2, 21, -22, 0.5], [66, 26, -23, 0.7], [73, 21, -24, 0.7], [81.8, 18, -24, 1],
+  [87.4, 34, -25, 0.7], [94.8, 18, -1, 1],
+];
+
+const text = (i: number) =>
+  [0, 3, 5, 8].map((k) => snippets[(i * 7 + k) % snippets.length]).join("  ·  ");
+---
+
+<div class="fx" aria-hidden="true">
+  <div class="fx-grid"></div>
+  {
+    columns.map(([left, dur, delay, op], i) => (
+      <div
+        class="fx-col"
+        style={`left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s;opacity:${op}`}
+      >
+        {text(i)}
+      </div>
+    ))
+  }
+  <div class="fx-sweep"></div>
+  <div class="fx-scan"></div>
+  <div class="fx-vignette"></div>
+</div>

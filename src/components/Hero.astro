@@ -1,0 +1,29 @@
+---
+import Icon from "./Icon.astro";
+import { profile, ui, anchors, tr, type Lang } from "../data/profile";
+import { hasPublicFile } from "../data/assets";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const hasCv = hasPublicFile(profile.cv);
+---
+
+<section id="inicio" class="hero container">
+  <p class="hero-meta fx-up"><span class="pulse"></span>{tr(profile.location, lang)}</p>
+  <p class="hero-prompt fx-up" aria-hidden="true">&gt; <span id="typed"></span><span class="caret"></span></p>
+  <div class="fx-up" style="animation-delay:.15s">
+    <h1 class="hero-title fx-glitch">
+      {t.hero.greeting} {profile.firstName}.<br /><span>{tr(profile.role, lang)}</span>
+    </h1>
+  </div>
+  <div class="hero-actions fx-up" style="animation-delay:.3s">
+    <a class="btn btn-primary fx-btn" href={`#${anchors.projects}`}>{t.hero.projects}<Icon name="arrow" size={16} /></a>
+    <a class="btn btn-outline fx-btn" href={hasCv ? profile.cv : `#${anchors.cv}`} download={hasCv ? "" : undefined}>
+      {t.hero.cv}<Icon name="download" size={16} />
+    </a>
+  </div>
+</section>

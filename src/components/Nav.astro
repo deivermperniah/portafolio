@@ -1,0 +1,63 @@
+---
+import Icon from "./Icon.astro";
+import { ui, sections, anchors, type Lang } from "../data/profile";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const desktopLinks = sections.filter((s) => s !== "cv");
+const home = lang === "es" ? "/" : "/en/";
+---
+
+<header class="nav">
+  <nav class="nav-inner container" aria-label={t.nav.main}>
+    <a class="logo" href={`${home}#inicio`}>deiver<span>.</span>dev</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        {desktopLinks.map((s) => <a href={`#${anchors[s]}`}>{t.sections[s]}</a>)}
+      </div>
+      <div class="lang-toggle" role="group" aria-label={t.nav.language}>
+        <a href="/" data-lang-link aria-current={lang === "es" ? "true" : undefined} lang="es">ES</a>
+        <a href="/en/" data-lang-link aria-current={lang === "en" ? "true" : undefined} lang="en">EN</a>
+      </div>
+      <button
+        type="button"
+        class="icon-btn"
+        id="theme-toggle"
+        aria-label={t.nav.toLight}
+        data-label-light={t.nav.toLight}
+        data-label-dark={t.nav.toDark}
+      >
+        <span class="theme-sun"><Icon name="sun" size={18} /></span>
+        <span class="theme-moon"><Icon name="moon" size={18} /></span>
+      </button>
+      <button
+        type="button"
+        class="icon-btn nav-burger"
+        id="menu-open"
+        aria-label={t.nav.open}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Icon name="menu" size={18} />
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="sheet" id="mobile-menu" hidden>
+  <button type="button" class="sheet-overlay" data-menu-close aria-label={t.nav.close}></button>
+  <nav class="sheet-panel" aria-label={t.nav.mobile}>
+    <div class="sheet-head">
+      <span class="logo">deiver<span>.</span>dev</span>
+      <button type="button" class="icon-btn ghost" data-menu-close aria-label={t.nav.close}>
+        <Icon name="close" size={18} />
+      </button>
+    </div>
+    {sections.filter((s) => s !== "contact").map((s) => <a class="sheet-link" href={`#${anchors[s]}`}>{t.sections[s]}</a>)}
+    <a class="btn btn-primary sheet-cta" href={`#${anchors.contact}`}>{t.sections.contact}</a>
+  </nav>
+</div>

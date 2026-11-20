@@ -1,181 +1,356 @@
-// Fuente única de datos del portafolio. La usan las ventanas del escritorio y la terminal.
+// Fuente única de datos del portafolio, en español (es) e inglés (en).
+
+export type Lang = "es" | "en";
+export type L = Record<Lang, string>;
+
+export const tr = (value: L | string, lang: Lang) => (typeof value === "string" ? value : value[lang]);
 
 export interface Experience {
-  role: string;
-  company: string;
-  period: string;
-  start: string; // ISO (YYYY-MM) para ordenar y generar el "hash"
-  highlights: string[];
-  stack: string[];
+  role: L;
+  company: L | string;
+  period: L;
+  highlights: L[];
+  stack: (L | string)[];
 }
 
 export interface Project {
   slug: string;
   name: string;
-  summary: string;
-  description: string;
-  role: string;
+  description: L;
   stack: string[];
   demo?: string;
   repo?: string;
-  image?: string; // ruta en /public, p. ej. "/projects/biblia-chat.webp"
+  image?: string; // ruta en /public, p. ej. "/projects/diezmapp.webp"
 }
 
 export interface StackGroup {
-  name: string;
+  name: L;
   items: string[];
 }
 
 export interface Education {
-  title: string;
+  title: L;
   institution: string;
-  period: string;
+  period: L;
+}
+
+export interface Certification {
+  title: L;
+  institution: string;
+  period: L;
+  image: string;
 }
 
 export const profile = {
   name: "Deiver Pernia",
-  user: "deivermperniah",
-  role: "Full Stack Developer & IT Support",
-  headline: "Desarrollador Full Stack que también entiende la infraestructura.",
-  pitch:
-    "Construyo interfaces con Vue y backends con Laravel y Supabase, y sé qué pasa por debajo: servidores, redes y bases de datos. Resuelvo el problema completo, no solo mi parte.",
+  firstName: "Deiver",
+  role: { es: "Desarrollador Full Stack", en: "Full Stack Developer" } as L,
   about: [
-    "¡Hola! Soy Deiver, informático con 1 año de experiencia entre desarrollo frontend y soporte técnico. Trabajo con Frontend, Backend, Bases de Datos, Sistemas Operativos y Redes.",
-    "Actualmente curso Ingeniería en Informática y en mi tiempo libre desarrollo proyectos personales para seguir creciendo profesionalmente.",
-  ],
-  location: "Lima, Perú",
-  available: true,
-  photo: "/foto.webp", // TODO: agregar public/foto.webp
-  cv: "/cv-deiver-pernia.pdf", // TODO: agregar public/cv-deiver-pernia.pdf
+    {
+      es: "Desarrollador Full Stack. Construyo aplicaciones web y móviles de principio a fin: interfaz, backend y base de datos, con Vue, React, Node.js y Supabase.",
+      en: "Full Stack Developer. I build web and mobile apps end to end: interface, backend and database, with Vue, React, Node.js and Supabase.",
+    },
+    {
+      es: "Estudio Ingeniería en Informática y sigo creando proyectos propios para aprender algo nuevo en cada uno.",
+      en: "I'm studying Computer Engineering and keep building my own projects to learn something new with each one.",
+    },
+  ] as L[],
+  location: { es: "Lima, Perú", en: "Lima, Peru" } as L,
+  photo: "/foto.webp",
+  cv: "/cv-deiver-pernia.pdf",
 };
 
 export const contact = {
   email: "deivermph@gmail.com",
   phone: "+51 927 494 171",
   whatsapp: "https://wa.me/51927494171",
-  linkedin: "", // TODO: URL de tu perfil de LinkedIn
-  github: "", // TODO: URL de tu perfil de GitHub
+  linkedin: "https://www.linkedin.com/in/deivermperniah/",
+  github: "https://github.com/deivermperniah",
+  instagram: "https://www.instagram.com/deivermperniah/",
+  x: "https://x.com/deivermperniah",
 };
 
 export const stack: StackGroup[] = [
-  { name: "Frontend", items: ["HTML", "CSS", "JavaScript", "Vue.js"] },
-  { name: "Backend", items: ["Laravel", "Supabase"] },
-  { name: "Bases de datos", items: ["MySQL", "PostgreSQL"] },
   {
-    name: "Infraestructura y soporte",
-    items: ["Linux", "Windows", "Redes LAN/WAN", "Hardware", "ERP"],
+    name: { es: "Frontend", en: "Frontend" },
+    items: ["HTML", "CSS", "JavaScript", "TypeScript", "Vue.js", "React", "Astro", "Tailwind CSS"],
+  },
+  { name: { es: "Móvil", en: "Mobile" }, items: ["React Native", "Expo", "Flutter"] },
+  { name: { es: "Backend", en: "Backend" }, items: ["Node.js", "Express", "Supabase"] },
+  { name: { es: "IA", en: "AI" }, items: ["Python"] },
+  { name: { es: "Bases de datos", en: "Databases" }, items: ["MySQL", "PostgreSQL"] },
+  { name: { es: "Sistemas operativos", en: "Operating systems" }, items: ["Linux", "Windows"] },
+  {
+    name: { es: "Herramientas", en: "Tools" },
+    items: ["Git", "GitHub", "Figma", "Vercel", "OpenCode", "Claude Code"],
   },
 ];
 
-export const tools = ["Git", "GitHub", "Figma"];
-
 export const experience: Experience[] = [
   {
-    role: "Técnico de Soporte Informático & Frontend",
-    company: "Alimentos Venepan",
-    period: "Jul 2024 - Oct 2024",
-    start: "2024-07",
-    highlights: [
-      "Desarrollé y mantuve la intranet corporativa con Vue.js, mejorando la comunicación interna y el acceso a la información.",
-      "Administré la infraestructura de redes LAN/WAN: routers, switches y firewalls, aplicando medidas de seguridad y monitoreo.",
-      "Gestioné bases de datos MySQL y el ERP de la empresa, asegurando respaldos, integridad y rendimiento.",
-      "Resolví incidencias de software y hardware para usuarios finales y documenté las soluciones.",
-    ],
-    stack: ["Vue.js", "JavaScript", "MySQL", "Redes"],
+    role: { es: "Técnico Informático y Desarrollador", en: "IT Technician and Developer" },
+    company: { es: "Independiente", en: "Freelance" },
+    period: { es: "Ene 2025 - Jul 2025", en: "Jan 2025 - Jul 2025" },
+    highlights: [],
+    stack: [],
   },
   {
-    role: "Desarrollador Frontend (Pasantías)",
-    company: "Redmasiva",
-    period: "Feb 2024 - Jun 2024",
-    start: "2024-02",
+    role: { es: "Desarrollador Full Stack y Soporte Técnico", en: "Full Stack Developer and IT Support" },
+    company: "Alimentos Venepan",
+    period: { es: "Jul 2024 - Dic 2024", en: "Jul 2024 - Dec 2024" },
     highlights: [
-      "Participé en el frontend de Biblia.chat, Redmasiva AI y B1omed, productos con usuarios reales.",
-      "Implementé funcionalidades interactivas y optimicé el rendimiento y la experiencia de usuario.",
+      {
+        es: "Desarrollé y mantuve la intranet corporativa, integrando frontend, backend y bases de datos.",
+        en: "Built and maintained the corporate intranet, integrating frontend, backend and databases.",
+      },
+      {
+        es: "Renové por completo su interfaz, construida con código de los años 2000 y usada por ~30 empleados del área administrativa.",
+        en: "Fully redesigned its interface, built on 2000s-era code and used by ~30 administrative employees.",
+      },
+      {
+        es: "Automaticé procesos de inventario y la generación de planillas.",
+        en: "Automated inventory processes and payroll generation.",
+      },
+      {
+        es: "Gestioné bases de datos MySQL y el ERP de la empresa, con copias de seguridad y optimización del rendimiento.",
+        en: "Managed MySQL databases and the company ERP, including backups and performance tuning.",
+      },
+      {
+        es: "Brindé soporte técnico de software, hardware y redes LAN/WAN.",
+        en: "Provided technical support for software, hardware and LAN/WAN networks.",
+      },
+    ],
+    stack: ["Vue.js", "JavaScript", "MySQL", { es: "Redes", en: "Networking" }],
+  },
+  {
+    role: { es: "Desarrollador Frontend (Pasantías)", en: "Frontend Developer (Internship)" },
+    company: "Redmasiva",
+    period: { es: "Feb 2024 - Jun 2024", en: "Feb 2024 - Jun 2024" },
+    highlights: [
+      {
+        es: "Desarrollo frontend de Biblia.chat (~100.000 descargas), Redmasiva AI y B1omed.",
+        en: "Frontend development for Biblia.chat (~100,000 downloads), Redmasiva AI and B1omed.",
+      },
+      {
+        es: "Construí interfaces responsivas y accesibles e implementé nuevas funcionalidades.",
+        en: "Built responsive, accessible interfaces and shipped new features.",
+      },
+      {
+        es: "Optimicé la velocidad de carga e integré APIs y servicios backend.",
+        en: "Improved load speed and integrated APIs and backend services.",
+      },
     ],
     stack: ["Vue.js", "JavaScript", "HTML", "CSS"],
   },
   {
-    role: "Técnico de Soporte Informático",
+    role: { es: "Técnico de Soporte Informático", en: "IT Support Technician" },
     company: "Instituto Universitario Adventista de Venezuela",
-    period: "Ago 2023 - Dic 2023",
-    start: "2023-08",
+    period: { es: "Ago 2023 - Dic 2023", en: "Aug 2023 - Dec 2023" },
     highlights: [
-      "Brindé soporte técnico a usuarios: diagnóstico y reparación de equipos, instalación de sistemas operativos y aplicaciones.",
-      "Ejecuté mantenimiento preventivo y correctivo de redes (routers, switches, cableado estructurado), reduciendo el tiempo de inactividad.",
+      {
+        es: "Brindé soporte técnico a usuarios: diagnóstico y reparación de equipos, e instalación y configuración de sistemas operativos y aplicaciones.",
+        en: "Provided user support: hardware diagnosis and repair, plus installation and setup of operating systems and applications.",
+      },
+      {
+        es: "Ejecuté mantenimiento preventivo y correctivo de redes (routers, switches y cableado estructurado), reduciendo el tiempo de inactividad.",
+        en: "Performed preventive and corrective network maintenance (routers, switches and structured cabling), reducing downtime.",
+      },
     ],
-    stack: ["Hardware", "Redes", "Windows", "Linux"],
+    stack: ["Hardware", { es: "Redes", en: "Networking" }, "Windows", "Linux"],
   },
 ];
 
-// TODO: reemplazar/ampliar con tus proyectos reales (descripción, capturas, demo y repo).
 export const projects: Project[] = [
   {
-    slug: "biblia-chat",
-    name: "Biblia.chat",
-    summary: "App conversacional para explorar la Biblia.",
-    description:
-      "Plataforma de chat para consultar y estudiar la Biblia. Trabajé en el frontend durante mis pasantías en Redmasiva.",
-    role: "Desarrollador Frontend",
-    stack: ["Vue.js", "JavaScript", "CSS"],
-    demo: "https://biblia.chat",
+    slug: "cocbase-app",
+    name: "cocbase-app",
+    description: {
+      es: "Aplicación móvil para descubrir, guardar y compartir bases de Clash of Clans.",
+      en: "Mobile app to discover, save and share Clash of Clans bases.",
+    },
+    stack: ["React Native", "Expo", "Supabase"],
+    demo: "https://cocbase.vercel.app/descargar",
+    repo: "https://github.com/deivermperniah/cocbase-app",
   },
   {
-    slug: "redmasiva-ai",
-    name: "Redmasiva AI",
-    summary: "Producto de IA de Redmasiva.",
-    description:
-      "Interfaz web de la plataforma de inteligencia artificial de Redmasiva. Implementé componentes interactivos y mejoras de rendimiento.",
-    role: "Desarrollador Frontend",
-    stack: ["Vue.js", "JavaScript"],
+    slug: "cocbase-web",
+    name: "cocbase-web",
+    description: {
+      es: "Plataforma web para explorar, filtrar y compartir bases de Clash of Clans.",
+      en: "Web platform to explore, filter and share Clash of Clans bases.",
+    },
+    stack: ["Astro", "Vue.js", "Tailwind CSS", "Supabase"],
+    demo: "https://cocbase.vercel.app/",
+    repo: "https://github.com/deivermperniah/cocbase-web",
   },
   {
-    slug: "b1omed",
-    name: "B1omed",
-    summary: "Plataforma web del sector salud.",
-    description:
-      "Aplicación web desarrollada en Redmasiva. Colaboré en el frontend y en la experiencia de usuario.",
-    role: "Desarrollador Frontend",
-    stack: ["Vue.js", "HTML", "CSS"],
+    slug: "inge",
+    name: "inge",
+    description: {
+      es: "Gestor de tareas académicas organizadas por asignatura y trimestre, con progreso y panel de administración.",
+      en: "Academic task manager organized by subject and term, with progress tracking and an admin panel.",
+    },
+    stack: ["Astro", "React", "Tailwind CSS", "Supabase"],
+    demo: "https://inge-iunav.vercel.app/",
+    repo: "https://github.com/deivermperniah/inge",
   },
   {
-    slug: "intranet-venepan",
-    name: "Intranet Venepan",
-    summary: "Intranet corporativa de Alimentos Venepan.",
-    description:
-      "Intranet para mejorar la comunicación interna y el acceso a la información de los empleados. La desarrollé y mantuve de principio a fin.",
-    role: "Desarrollador Full Stack",
-    stack: ["Vue.js", "JavaScript", "MySQL"],
+    slug: "diezmapp",
+    name: "diezmapp",
+    description: {
+      es: "Proyecto académico: aplicación web para administrar diezmos, ofrendas, transferencias y reportes por iglesia.",
+      en: "Academic project: web app to manage tithes, offerings, transfers and reports per church.",
+    },
+    stack: ["Vue.js", "Vite", "PrimeVue", "Node.js", "Express", "PostgreSQL"],
+    demo: "https://diezmapp.vercel.app/",
+    repo: "https://github.com/deivermperniah/diezmapp",
   },
 ];
 
 export const education: Education[] = [
   {
-    title: "Ingeniería en Informática",
+    title: { es: "Ingeniería en Informática", en: "Computer Engineering" },
     institution: "Universidad Politécnica Territorial de Yaracuy “Arístides Bastidas”",
-    period: "Oct 2024 - Presente",
+    period: { es: "Oct 2024 - Presente", en: "Oct 2024 - Present" },
   },
   {
-    title: "Técnico Superior Universitario en Informática",
+    title: {
+      es: "Técnico Superior Universitario en Informática",
+      en: "Associate Degree in Computer Science",
+    },
     institution: "Instituto Universitario Adventista de Venezuela",
-    period: "Ene 2021 - Jun 2024",
+    period: { es: "Ene 2021 - Jun 2024", en: "Jan 2021 - Jun 2024" },
   },
 ];
 
-export const languages = [
-  { name: "Español", level: "Nativo" },
-  { name: "Inglés", level: "A2" },
+export const certifications: Certification[] = [
+  {
+    title: {
+      es: "Curso de Introducción a la Inteligencia Artificial",
+      en: "Introduction to Artificial Intelligence Course",
+    },
+    institution: "Platzi",
+    period: { es: "May 2026", en: "May 2026" },
+    image: "/certificates/intro-ai-platzi.webp",
+  },
 ];
 
-// Aplicaciones del escritorio (orden = orden en el dock y en la cuadrícula móvil).
-export const apps = [
-  { id: "about", title: "Sobre mí", file: "Sobre_mi", icon: "user", color: "#3584e4" },
-  { id: "cv", title: "CV", file: "CV.pdf", icon: "file", color: "#c01c28" },
-  { id: "experience", title: "Experiencia", file: "Experiencia", icon: "briefcase", color: "#e66100" },
-  { id: "projects", title: "Proyectos", file: "Proyectos", icon: "folder", color: "#1c71d8" },
-  { id: "stack", title: "Stack", file: "Stack", icon: "cpu", color: "#9141ac" },
-  { id: "education", title: "Educación", file: "Educación", icon: "graduation", color: "#26a269" },
-  { id: "contact", title: "Contacto", file: "Contacto", icon: "mail", color: "#e5a50a" },
-  { id: "terminal", title: "Terminal", file: "Terminal", icon: "terminal", color: "#241f31" },
-] as const;
+export const languages: { name: L; level: L }[] = [
+  { name: { es: "Español", en: "Spanish" }, level: { es: "Nativo", en: "Native" } },
+  { name: { es: "Inglés", en: "English" }, level: { es: "A2", en: "A2" } },
+];
 
-export type AppId = (typeof apps)[number]["id"];
+// Textos de la interfaz.
+export const ui = {
+  es: {
+    title: "Deiver Pernia — Desarrollador Full Stack",
+    description: "Portafolio de Deiver Pernia, Desarrollador Full Stack: experiencia, proyectos, stack y contacto.",
+    nav: {
+      main: "Principal",
+      mobile: "Menú móvil",
+      open: "Abrir menú",
+      close: "Cerrar menú",
+      toLight: "Cambiar a modo claro",
+      toDark: "Cambiar a modo oscuro",
+      language: "Idioma",
+    },
+    sections: {
+      about: "Sobre mí",
+      experience: "Experiencia",
+      projects: "Proyectos",
+      stack: "Stack",
+      education: "Educación",
+      cv: "CV",
+      contact: "Contacto",
+    },
+    hero: { greeting: "Hola, soy", projects: "Ver proyectos", cv: "Descargar CV" },
+    about: { photo: "Foto de" },
+    experience: { title: "Dónde he trabajado" },
+    projects: { title: "Lo que he construido", demo: "Ver demo", repo: "Código", shot: "Captura de" },
+    stack: { title: "Herramientas con las que trabajo" },
+    education: { title: "Formación", certifications: "Certificaciones", languages: "Idiomas" },
+    cv: { title: "¿Prefieres todo en una página?", text: "Descarga mi CV en PDF.", button: "Descargar CV (PDF)" },
+    contact: {
+      title: "¿Tienes un proyecto o una vacante? Hablemos.",
+      copy: "Copiar",
+      copied: "Correo copiado",
+      copiedText: "Pégalo donde quieras.",
+      copyError: "No se pudo copiar el correo.",
+      name: "Nombre",
+      namePh: "Tu nombre",
+      email: "Correo",
+      emailPh: "tu@correo.com",
+      message: "Mensaje",
+      messagePh: "Cuéntame de tu proyecto o vacante…",
+      send: "Enviar mensaje",
+      sending: "Enviando…",
+      sent: "Mensaje enviado",
+      sentText: "Te responderé pronto.",
+      error: "No se pudo enviar",
+      errorText: "Inténtalo de nuevo o escríbeme al correo.",
+      subject: "Nuevo mensaje desde el portafolio",
+    },
+  },
+  en: {
+    title: "Deiver Pernia — Full Stack Developer",
+    description: "Portfolio of Deiver Pernia, Full Stack Developer: experience, projects, stack and contact.",
+    nav: {
+      main: "Main",
+      mobile: "Mobile menu",
+      open: "Open menu",
+      close: "Close menu",
+      toLight: "Switch to light mode",
+      toDark: "Switch to dark mode",
+      language: "Language",
+    },
+    sections: {
+      about: "About",
+      experience: "Experience",
+      projects: "Projects",
+      stack: "Stack",
+      education: "Education",
+      cv: "CV",
+      contact: "Contact",
+    },
+    hero: { greeting: "Hi, I'm", projects: "View projects", cv: "Download CV" },
+    about: { photo: "Photo of" },
+    experience: { title: "Where I've worked" },
+    projects: { title: "What I've built", demo: "View demo", repo: "Code", shot: "Screenshot of" },
+    stack: { title: "Tools I work with" },
+    education: { title: "Education", certifications: "Certifications", languages: "Languages" },
+    cv: { title: "Prefer it all on one page?", text: "Download my CV as a PDF.", button: "Download CV (PDF)" },
+    contact: {
+      title: "Have a project or an opening? Let's talk.",
+      copy: "Copy",
+      copied: "Email copied",
+      copiedText: "Paste it wherever you like.",
+      copyError: "Couldn't copy the email.",
+      name: "Name",
+      namePh: "Your name",
+      email: "Email",
+      emailPh: "you@email.com",
+      message: "Message",
+      messagePh: "Tell me about your project or opening…",
+      send: "Send message",
+      sending: "Sending…",
+      sent: "Message sent",
+      sentText: "I'll get back to you soon.",
+      error: "Couldn't send",
+      errorText: "Try again or email me directly.",
+      subject: "New message from the portfolio",
+    },
+  },
+};
+
+// Anclas de las secciones (iguales en ambos idiomas).
+export const sections = ["about", "experience", "projects", "stack", "education", "cv", "contact"] as const;
+export type SectionId = (typeof sections)[number];
+export const anchors: Record<SectionId, string> = {
+  about: "sobre-mi",
+  experience: "experiencia",
+  projects: "proyectos",
+  stack: "stack",
+  education: "educacion",
+  cv: "cv",
+  contact: "contacto",
+};
