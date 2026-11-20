@@ -1,14 +1,14 @@
 # portafolio
 
-Portafolio personal con forma de escritorio Linux (estilo Fedora/GNOME) en el navegador: ventanas arrastrables, vista general, terminal y vista móvil.
+Portafolio personal de una sola página, con estética neón/ciberpunk, modo claro y oscuro, y versión en español e inglés.
 
 🔗 Demo: https://deivermperniah.vercel.app/
 
 ## Qué se puede hacer
 
-- **Abrir ventanas** arrastrables con minimizar, maximizar y cerrar, más vista general.
-- **Usar la terminal** para navegar el portafolio con comandos.
-- **Entrar por deep link** (`/#projects`, `/#cv`, `/#contact`) y abrir la ventana correspondiente.
+- **Recorrer las secciones**: sobre mí, experiencia, proyectos, stack, educación, CV y contacto.
+- **Cambiar de tema** (claro/oscuro) y de **idioma** (`/` en español, `/en/` en inglés).
+- **Contactar** copiando el correo o con el formulario (enviado con FormSubmit).
 - **Editar todo el contenido** desde un solo archivo (`src/data/profile.ts`).
 
 ## Stack
@@ -21,17 +21,16 @@ Portafolio personal con forma de escritorio Linux (estilo Fedora/GNOME) en el na
 
 ```text
 src/
-├── pages/index.astro       # Única ruta; monta el escritorio
+├── pages/
+│   ├── index.astro         # Español
+│   └── en/index.astro      # Inglés
 ├── layouts/BaseLayout.astro
-├── components/
-│   ├── os/                 # Escritorio: TopBar, Window, Overview…
-│   ├── apps/               # Contenido de cada ventana
-│   └── Terminal.astro
+├── components/             # Una sección por componente + Nav, Footer, Background
 ├── data/
-│   ├── profile.ts          # Todo el contenido editable
+│   ├── profile.ts          # Todo el contenido editable (es/en)
 │   └── assets.ts           # Detección de archivos opcionales en public/
-├── scripts/window-manager.ts
-└── styles/                 # os.css y terminal.css
+├── scripts/site.ts         # Tema, menú, copiar correo, formulario
+└── styles/site.css
 ```
 
 ## Puesta en marcha

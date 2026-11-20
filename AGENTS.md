@@ -13,28 +13,27 @@
 
 - Astro 7 con salida estática (sin adapter ni SSR).
 - Sin frameworks de UI: solo componentes `.astro` y JavaScript/TypeScript del lado del cliente.
-- Estilos en CSS propio (`src/styles/os.css` y `src/styles/terminal.css`).
+- Estilos en CSS propio (`src/styles/site.css`).
 - Gestor de paquetes: npm.
 
 ## Estructura
 
-- `src/pages/index.astro`: única ruta; monta el escritorio.
-- `src/layouts/BaseLayout.astro`: layout base (head, metadatos).
-- `src/components/os/`: escritorio (TopBar, Window, Overview, BootScreen, AppIcon, ContextMenu, Notification, Icon).
-- `src/components/apps/`: contenido de cada ventana (About, Cv, Experience, Projects, Stack, Education, Contact).
-- `src/components/Terminal.astro` y `CommandInput.astro`: terminal interactiva.
-- `src/data/profile.ts`: todo el contenido editable (perfil, experiencia, proyectos, stack, educación, contacto).
-- `src/data/assets.ts`: detección en build de archivos opcionales en `public/`.
-- `src/scripts/window-manager.ts`: gestión de ventanas (abrir, arrastrar, minimizar, maximizar, cerrar).
-- `src/styles/`: `os.css` (escritorio) y `terminal.css`.
+- `src/pages/index.astro` (español) y `src/pages/en/index.astro` (inglés): montan `Portfolio.astro` con su idioma.
+- `src/layouts/BaseLayout.astro`: layout base (head, metadatos, tema inicial).
+- `src/components/`: una sección por componente (Hero, About, Experience, Projects, Stack, Education, CvCta, Contact), más Nav, Footer, Background (efectos de fondo), SectionHeader e Icon.
+- `src/data/profile.ts`: todo el contenido editable en español e inglés, y los textos de la interfaz (`ui`).
+- `src/data/assets.ts`: detección en build de archivos opcionales en `public/` e iconos del stack.
+- `src/scripts/site.ts`: tema claro/oscuro, menú móvil, efecto de escritura, copiar correo y formulario de contacto.
+- `src/styles/site.css`: estilos y tokens de color de ambos temas.
 
 ## Convenciones
 
-- Todo el contenido va en `src/data/profile.ts`; lo usan tanto las ventanas como la terminal. No duplicar datos.
+- Todo el contenido va en `src/data/profile.ts`. Los textos traducibles son `{ es, en }` y se leen con `tr(valor, lang)`. No duplicar datos.
 - Los recursos opcionales de `public/` se detectan con `hasPublicFile` (`src/data/assets.ts`) y se muestran solo si existen.
-- La navegación es por deep links (`/#projects`, `/#cv`, `/#contact`, etc.) que abren la ventana correspondiente; no hay router.
-- Mantener el comportamiento responsivo: escritorio en pantallas grandes y pantalla de inicio tipo teléfono en móvil.
-- Textos de la interfaz en español; código (nombres, variables, slugs) en inglés.
+- Página única con anclas por sección (`#sobre-mi`, `#experiencia`, `#proyectos`, `#stack`, `#educacion`, `#cv`, `#contacto`), iguales en ambos idiomas.
+- El formulario de contacto envía con FormSubmit (`formsubmit.co`); no hay backend propio.
+- Mantener el diseño responsivo (escritorio y móvil) y los efectos desactivados con `prefers-reduced-motion`.
+- Textos de la interfaz en español e inglés; código (nombres, variables, slugs) en inglés.
 
 ## Fuera de alcance por ahora
 
