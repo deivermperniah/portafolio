@@ -88,11 +88,28 @@ export const stack: StackGroup[] = [
 
 export const experience: Experience[] = [
   {
-    role: { es: "Técnico Informático y Desarrollador", en: "IT Technician and Developer" },
+    role: { es: "Desarrollador Full Stack y Soporte Técnico", en: "Full Stack Developer and IT Support" },
     company: { es: "Independiente", en: "Freelance" },
-    period: { es: "Ene 2025 - Jul 2025", en: "Jan 2025 - Jul 2025" },
-    highlights: [],
-    stack: [],
+    period: { es: "Ene 2025 - Actualmente", en: "Jan 2025 - Present" },
+    highlights: [
+      {
+        es: "Desarrollo de páginas y aplicaciones web a medida para clientes.",
+        en: "Built custom websites and web apps for clients.",
+      },
+      {
+        es: "Diagnóstico, reparación y mantenimiento de computadoras y laptops para clientes.",
+        en: "Diagnosed, repaired and maintained desktops and laptops for clients.",
+      },
+      {
+        es: "Instalación y configuración de sistemas operativos, software y copias de seguridad.",
+        en: "Installed and configured operating systems, software and backups.",
+      },
+      {
+        es: "Instalación y configuración de redes, routers y Wi-Fi para hogares y negocios.",
+        en: "Set up and configured networks, routers and Wi-Fi for homes and businesses.",
+      },
+    ],
+    stack: ["Hardware", { es: "Redes", en: "Networking" }, "Windows", "Linux"],
   },
   {
     role: { es: "Desarrollador Full Stack y Soporte Técnico", en: "Full Stack Developer and IT Support" },
