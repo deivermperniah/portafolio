@@ -62,7 +62,6 @@ export const profile = {
 
 export const contact = {
   email: "deivermph@gmail.com",
-  phone: "+51 927 494 171",
   linkedin: "https://www.linkedin.com/in/deivermperniah/",
   github: "https://github.com/deivermperniah",
   instagram: "https://www.instagram.com/deivermperniah/",
