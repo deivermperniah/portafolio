@@ -188,6 +188,7 @@ export const projects: Project[] = [
     stack: ["React Native", "Expo", "Supabase"],
     demo: "https://cocbase.vercel.app/descargar",
     repo: "https://github.com/deivermperniah/cocbase-app",
+    image: "/projects/cocbase-app.webp",
   },
   {
     slug: "cocbase-web",
@@ -199,6 +200,7 @@ export const projects: Project[] = [
     stack: ["Astro", "Vue.js", "Tailwind CSS", "Supabase"],
     demo: "https://cocbase.vercel.app/",
     repo: "https://github.com/deivermperniah/cocbase-web",
+    image: "/projects/cocbase-web.webp",
   },
   {
     slug: "inge",
@@ -210,6 +212,7 @@ export const projects: Project[] = [
     stack: ["Astro", "React", "Tailwind CSS", "Supabase"],
     demo: "https://inge-iunav.vercel.app/",
     repo: "https://github.com/deivermperniah/inge",
+    image: "/projects/inge.webp",
   },
   {
     slug: "diezmapp",
@@ -221,6 +224,7 @@ export const projects: Project[] = [
     stack: ["Vue.js", "Vite", "PrimeVue", "Node.js", "Express", "PostgreSQL"],
     demo: "https://diezmapp.vercel.app/",
     repo: "https://github.com/deivermperniah/diezmapp",
+    image: "/projects/diezmapp.webp",
   },
 ];
 
