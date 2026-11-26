@@ -140,7 +140,7 @@ export const experience: Experience[] = [
     stack: ["Vue.js", "JavaScript", "MySQL", { es: "Redes", en: "Networking" }],
   },
   {
-    role: { es: "Desarrollador Frontend (Pasantías)", en: "Frontend Developer (Internship)" },
+    role: { es: "Desarrollador Frontend (Prácticas Profesionales)", en: "Frontend Developer (Professional Internship)" },
     company: "Redmasiva",
     period: { es: "Feb 2024 - Jun 2024", en: "Feb 2024 - Jun 2024" },
     highlights: [
