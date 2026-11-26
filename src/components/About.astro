@@ -13,19 +13,21 @@ const hasPhoto = hasPublicFile(profile.photo);
 ---
 
 <section id={anchors.about} class="section">
-  <div class="container about">
-    <div class="about-side">
-      <SectionHeader index={1} label={t.sections.about} />
+  <div class="container stack-lg">
+    <SectionHeader index={1} label={t.sections.about} title={t.about.title} />
+    <div class="about">
       {
         hasPhoto ? (
-          <img class="avatar" src={profile.photo} alt={`${t.about.photo} ${profile.name}`} width="160" height="160" />
+          <div class="avatar avatar-frame">
+            <img src={profile.photo} alt={`${t.about.photo} ${profile.name}`} width="200" height="200" />
+          </div>
         ) : (
           <div class="avatar avatar-fallback" aria-hidden="true">DP</div>
         )
       }
-    </div>
-    <div class="about-text">
-      {profile.about.map((p) => <p>{tr(p, lang)}</p>)}
+      <div class="about-text">
+        {profile.about.map((p) => <p>{tr(p, lang)}</p>)}
+      </div>
     </div>
   </div>
 </section>
