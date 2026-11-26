@@ -47,12 +47,12 @@ export const profile = {
   role: { es: "Desarrollador Full Stack", en: "Full Stack Developer" } as L,
   about: [
     {
-      es: "Desarrollador Full Stack. Construyo aplicaciones web y móviles de principio a fin: interfaz, backend y base de datos, con Vue, React, Node.js y Supabase.",
-      en: "Full Stack Developer. I build web and mobile apps end to end: interface, backend and database, with Vue, React, Node.js and Supabase.",
+      es: "Soy desarrollador de software Full Stack. Diseño y construyo aplicaciones multiplataforma con TypeScript, React, Vue, React Native, Node.js y Supabase, apoyándome en herramientas de IA para desarrollar de forma más rápida y eficiente.",
+      en: "I'm a Full Stack software developer. I design and build cross-platform apps with TypeScript, React, Vue, React Native, Node.js and Supabase, using AI tools to develop faster and more efficiently.",
     },
     {
-      es: "Estudio Ingeniería en Informática y sigo creando proyectos propios para aprender algo nuevo en cada uno.",
-      en: "I'm studying Computer Engineering and keep building my own projects to learn something new with each one.",
+      es: "He participado en productos con usuarios reales, modernizado sistemas empresariales y desarrollado proyectos propios que tengo en producción. Actualmente curso Ingeniería en Informática.",
+      en: "I've worked on products with real users, modernized business systems and built my own projects that are live in production. I'm currently studying Computer Engineering.",
     },
   ] as L[],
   location: { es: "Lima, Perú", en: "Lima, Peru" } as L,
