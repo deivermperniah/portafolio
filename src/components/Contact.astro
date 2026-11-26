@@ -11,11 +11,9 @@ const { lang } = Astro.props;
 const t = ui[lang].contact;
 
 const socials = [
-  { label: "LinkedIn", href: contact.linkedin },
   { label: "GitHub", href: contact.github },
-  { label: "WhatsApp", href: contact.whatsapp },
+  { label: "LinkedIn", href: contact.linkedin },
   { label: "Instagram", href: contact.instagram },
-  { label: "X", href: contact.x },
 ].filter((s) => s.href);
 ---
 
