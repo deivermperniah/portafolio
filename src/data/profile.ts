@@ -226,6 +226,30 @@ export const projects: Project[] = [
     repo: "https://github.com/deivermperniah/diezmapp",
     image: "/projects/diezmapp.webp",
   },
+  {
+    slug: "cyberguard",
+    name: "cyberguard",
+    description: {
+      es: "Proyecto académico en equipo: juego narrativo sobre la respuesta a un ransomware en IUNAV, con decisiones, evidencias y laboratorio de phishing.",
+      en: "Academic team project: narrative game about responding to a ransomware attack at IUNAV, with decisions, evidence and a phishing lab.",
+    },
+    stack: ["HTML", "CSS", "JavaScript"],
+    demo: "https://cyberguard-iunav.vercel.app/",
+    repo: "https://github.com/deivermperniah/cyberguard",
+    image: "/projects/cyberguard.webp",
+  },
+  {
+    slug: "asistente-hipotesis",
+    name: "asistente-hipotesis",
+    description: {
+      es: "Proyecto académico: asistente de pruebas de hipótesis (z y t de Student, media y proporción) con decisión explicada y gráfico de la región de rechazo.",
+      en: "Academic project: hypothesis testing assistant (z and Student's t, mean and proportion) with a plain-language decision and a rejection-region chart.",
+    },
+    stack: ["R", "Shiny"],
+    demo: "https://deivermperniah.shinyapps.io/asistente-hipotesis/",
+    repo: "https://github.com/deivermperniah/asistente-hipotesis",
+    image: "/projects/asistente-hipotesis.webp",
+  },
 ];
 
 export const education: Education[] = [
